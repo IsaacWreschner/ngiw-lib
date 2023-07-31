@@ -4,8 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
+    "build": "ng build ngiw-core-utils & ng build core-ui",
+    "watch": "ng build ngiw-core-utils --watch --configuration development  ",
     "test": "ng test"
   },
   "private": true,

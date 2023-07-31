@@ -2,11 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'lib-core-ui',
-  template: `
-    <p>
-      core-ui works!
-    </p>
-  `,
+  template: ` <p> core-ui works! </p>`,
   styles: [
   ]
 })

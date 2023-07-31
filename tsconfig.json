@@ -6,6 +6,9 @@
     "paths": {
       "core-ui": [
         "dist/core-ui"
+      ],
+      "core-utils": [
+        "dist/core-utils"
       ]
     },
     "outDir": "./dist/out-tsc",
