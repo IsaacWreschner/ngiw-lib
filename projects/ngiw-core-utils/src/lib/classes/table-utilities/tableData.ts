@@ -10,7 +10,7 @@ export class TableDataUtil implements IUtils {
     options:{ flatternBy?:string |Function } | undefined;
     data:any = [];
     $data:Subject<any[]> = new Subject();
-    constructor(uid?:string | Function,options?:{ flatternBy?:string |Function }) {
+    constructor(uid?:string | Function, options?:{ flatternBy?:string |Function }) {
         this.options = options;
         this.uid = uid;
         if (uid) {

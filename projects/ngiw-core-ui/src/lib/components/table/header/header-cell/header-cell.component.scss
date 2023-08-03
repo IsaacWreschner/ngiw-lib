@@ -1,0 +1,25 @@
+.header-cell-wrapper {
+    div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        flex-wrap: nowrap;
+        &.show-filter-sorter {
+            cursor:pointer;
+            .sorter-section {
+                display: none;
+                visibility: hidden;
+                justify-content: center;
+                flex-grow: 1;
+            }
+            .header-label {
+                flex-grow: 1;
+            }
+            .undo-filter {
+                font-size: 17px;
+                transform: translate(20%,0%);
+            }
+        }
+    }
+}

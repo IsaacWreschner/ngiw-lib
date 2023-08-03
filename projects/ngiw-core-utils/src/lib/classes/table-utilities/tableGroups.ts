@@ -17,7 +17,7 @@ type DataGroupRow = {
 
 type DataGroup = DataGroupRow[];
 
-export class TableGroupUtil implements IUtils { 
+export class TableGroupsUtil implements IUtils { 
   private data:any[] = [];
   public $data:BehaviorSubject<any> = new BehaviorSubject([]);
 

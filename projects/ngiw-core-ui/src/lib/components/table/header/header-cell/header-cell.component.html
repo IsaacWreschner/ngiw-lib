@@ -1,0 +1,36 @@
+<div class="header-cell-wrapper">
+    <div *ngIf="showFilterSorter" nz-popover (click)="createSearchList()" [nzPopoverVisible]="showPopover"
+        nzPopoverTrigger="click" (nzPopoverVisibleChange)="onPopoverVisibleChange()" [nzPopoverContent]="filterSorter"
+        class="show-filter-sorter">
+        <div class="sorter-section">
+            <div (click)="onSortColumn($event)" matRipple  nzTooltipTitle="מיין"
+                nzTooltipPlacement="left" nz-tooltip>
+                <div>
+                    <mat-icon>
+                        swap_vert
+                    </mat-icon>
+                </div>
+            </div>
+        </div>
+        <div class = "undo-filter" (click)="columnUndoFilter()" *ngIf="columnHasFilter()">
+            <div matRipple>
+                <mat-icon>
+                    search_off
+                </mat-icon>
+            </div>
+        </div>
+        <div class = "header-label">
+            {{ headerLabel }}
+        </div>      
+    </div>
+    
+    <div  *ngIf="!showFilterSorter">
+        {{ headerLabel }}
+    </div>
+</div>
+
+<ng-template #filterSorter>
+    <ngiw-filter-sorter (filter)="onFilterCol($event)" [searchList]="currentSearchList">
+    </ngiw-filter-sorter>
+</ng-template>
+

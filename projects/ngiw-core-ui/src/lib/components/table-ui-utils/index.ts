@@ -1,0 +1,1 @@
+export * from './filter-sorter/filter-sorter/filter-sorter.component'

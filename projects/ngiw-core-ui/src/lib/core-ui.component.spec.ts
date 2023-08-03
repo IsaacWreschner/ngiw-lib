@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoreUiComponent } from './core-ui.component';
 
 describe('CoreUiComponent', () => {
-  let component: CoreUiComponent;
+  let component: CoreUiComponent; 
   let fixture: ComponentFixture<CoreUiComponent>;
 
   beforeEach(() => {
