@@ -26,15 +26,23 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzPopoverModule } from 'ng-zorro-antd/popover';
 import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzCascaderModule } from 'ng-zorro-antd/cascader';
+
+
 import { TranslationPipe } from 'ngiw-core-utils';
 import { HeaderCellComponent } from './components/table/header/header-cell/header-cell.component';
+import { TreeSelectComponent } from './components/select/tree-select/tree-select.component';
+import { SingleSelectComponent } from './components/select/single-select/single-select.component';
+
 
 
 @NgModule({
   declarations: [
     CoreUiComponent,
     FilterSorterComponent,
-    HeaderCellComponent
+    HeaderCellComponent,
+    TreeSelectComponent,
+    SingleSelectComponent
   
   ],
   imports: [
@@ -53,10 +61,12 @@ import { HeaderCellComponent } from './components/table/header/header-cell/heade
     NzPopoverModule,
     MatInputModule,
     NzInputModule,
+    NzCascaderModule
   ],
   exports: [
     FilterSorterComponent,
-    HeaderCellComponent
+    HeaderCellComponent,
+    TreeSelectComponent
   ],
   providers: [TranslationPipe]
 })

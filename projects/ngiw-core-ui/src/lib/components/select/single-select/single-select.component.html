@@ -1,0 +1,9 @@
+<nz-select 
+   nzShowSearch 
+   nzAllowClear 
+   [nzPlaceHolder]="placeholder" 
+>
+ <nz-option *ngFor="let option of options" 
+          [nzLabel]="option.label" 
+          [nzValue]="option.id"></nz-option>
+</nz-select>

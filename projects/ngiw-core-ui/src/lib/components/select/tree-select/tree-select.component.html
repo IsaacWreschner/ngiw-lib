@@ -1,0 +1,6 @@
+<div class = "tree-select" [style.width] = "width ?? 200">
+    <nz-cascader [(ngModel)]="values" 
+                [nzOptions]="options" 
+                (ngModelChange)="onChanges($event)">
+    </nz-cascader>
+  </div>
