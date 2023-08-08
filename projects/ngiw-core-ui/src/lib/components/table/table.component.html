@@ -1,0 +1,127 @@
+<div  [id] = "id"
+     (mouseup) = "onMouseUp()"
+     ngiwVirtualScrollingX 
+     ngiwVirtualScrollingY
+     [ngiwArrowsKeysObservable] = "arrowsKeysObservable" 
+     [ngiwRecordsLength] = "ngiwRows"
+     [ngiwFirstColumnFixed] = "ngiwFirstColumnFixed"
+     [ngiwColumnsLength] = "ngiwCols"
+     [style.height] = "'500px'"
+     [style.minHeight] = "'500px'"
+     [style.maxHeight] = "(ngiwHeight) ?? 500"
+     [style.width] = "ngiwWidth || '100%'"
+     (ngiwGetVirtualContainersWidths) = "onGetContainersWidths($event)"
+     (ngiwGetYRange) = "onGetYRange($event)"
+     (ngiwGetXRange) = "onGetXRange($event)"
+     (ngiwIsLoading) = "onVirtualLoading($event)"
+     class = "ngiw-table-wrapper scroll"  
+     >
+    <div>
+        <table>
+            <tr>
+                <th class = "th-sticky" 
+                    *ngIf= "ngiwFirstColumnFixed">
+                        <ng-container
+                        *ngIf="headerTemplateRef"
+                        [ngTemplateOutlet]="headerTemplateRef"
+                        [ngTemplateOutletContext]="{$implicit:0}"
+                        >
+                        </ng-container>
+                </th>
+                <th [style.minWidth] = "getThWidth(col)"
+                    [style.width] = "getThWidth(col)"
+                    [style.maxWidth] = "getThWidth(col)"
+                    class = "ngiwThForVS"
+                    *ngFor= "let col of XRange">
+                        <div (ngiwResizable) ="onResize($event,col)"
+                            class = "resizable">
+                        </div>
+                        <ng-container
+                        *ngIf="headerTemplateRef"
+                        [ngTemplateOutlet]="headerTemplateRef"
+                        [ngTemplateOutletContext]="{$implicit:col + XRangeBegin}"
+                        >
+                        </ng-container>          
+                </th>
+            </tr>
+            <div *ngIf = "YRange && YRange.length > 0" id = "virtual-container-before"></div>
+            <div *ngIf = "ngiwIsAdding">
+                    <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
+            </div>
+            <tr  style = "overflow:show" *ngFor="let row of YRange" > 
+                <td  class = "td-sticky" 
+                *ngIf= "ngiwFirstColumnFixed">
+                    <ng-container
+                        *ngIf="bodyTemplateRef &&  ngiwRows - row  + YRangeBegin > 0"
+                        [ngTemplateOutlet]="bodyTemplateRef"
+                        [ngTemplateOutletContext]="{row:row  + YRangeBegin, col:0}"
+                    >
+                    </ng-container>
+                </td>
+                <td  *ngFor= "let col of XRange"
+                     tabindex="0"
+                     (contextmenu) = "handleContextMenu($event,row,col)"
+                     cdkOverlayOrigin
+                     #trigger="cdkOverlayOrigin"
+                    (click) = "onFocus(row ,col)"
+                    (focusin) = "onFocus(row,col)"
+                >
+                <ng-template
+                    cdkConnectedOverlay
+                    [cdkConnectedOverlayOrigin]="trigger"
+                    [cdkConnectedOverlayPositions] = "positions"
+                    [cdkConnectedOverlayOpen]="isOverlayOpen(row,col)"
+                    (overlayOutsideClick) = "closeOverlay()"
+                    >   
+                    <div (click) = "closeOverlay()" class = "_overlay">
+                        <ng-container
+                        *ngIf="showCloseOverlay(row)"
+                        [ngTemplateOutlet]="contextMenuTemplateRef"
+                        [ngTemplateOutletContext]="{row:row  + YRangeBegin,col:col + XRangeBegin}"
+                            >
+                        </ng-container>  
+                    </div>
+                </ng-template>
+                <ng-container
+                    *ngIf="bodyTemplateRef &&  ngiwRows - row  + YRangeBegin > 0"
+                    [ngTemplateOutlet]="bodyTemplateRef "
+                    [ngTemplateOutletContext] = "{row:row  + YRangeBegin, col:col + XRangeBegin}"
+                    >
+                </ng-container>   
+             </td> 
+           </tr>
+            <div *ngIf = "YRange && YRange.length > 0" id = "virtual-container-after">
+                <div *ngIf = "isVirtualLoading">
+                    <mat-progress-bar  mode="indeterminate"></mat-progress-bar>
+                </div>
+            </div>
+       </table> 
+    </div>
+    <div id = "resize-bar"></div>
+</div>
+
+<nz-back-top [nzTarget]="table"></nz-back-top>
+
+<!--
+    
+    <div 
+                    *ngIf = "isScrolling"
+                    style = "
+                    background-color: rgba(210, 227, 233, 0.19);
+                        left:2%;
+                        top:2%;
+                        height:96%;
+                        width:96%;
+                        position: absolute;
+                        z-index: 99;">
+                    
+                </div>
+                     [style.boxShadow] = "(focusCoordinates.row === row  + YRangeBegin 
+                                        && focusCoordinates.col === col + XRangeBegin)
+                            ?
+                        ('inset 0px 0px 0px 1px blue'):('')"
+                    [style.boxShadow] = "(focusCoordinates.row === row  + YRangeBegin 
+                                        && focusCoordinates.col === XRangeBegin)
+                            ?
+                        ('inset 0px 0px 0px 1px blue'):('')"-->
+

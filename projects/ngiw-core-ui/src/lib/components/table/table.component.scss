@@ -1,0 +1,105 @@
+@import '../../assets/styles/variables.scss';
+
+.ngiw-table-wrapper {
+    overflow: auto;
+    overflow-anchor: none;
+    max-height: inherit;
+    position: relative;
+
+    table {
+        border-collapse: separate;
+        border-spacing: 0;
+
+        tr:nth(0) {
+            z-index: 5;
+            position: sticky;
+            top: 0px;
+        }
+
+        th {
+            position: sticky;
+            top: 0px;
+            height: 30px;
+            border-left: 1px solid $color-border-light;
+            border-right: 1px solid $color-border-light;
+            border-top: 2px solid $color-border-light;
+            border-bottom: 1.5px solid $color-border-light;
+            box-shadow: 0px 1px 2px rgb(216, 216, 216);  
+            z-index: 4;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            text-align: center;
+            background-color: white;           
+            .resizable {
+                position:absolute;
+                width:10px;
+                height:100%;
+                z-index:11;
+                left:-5px;
+                top:0;
+                cursor: e-resize;
+            }
+        }
+
+        td {
+            position: relative;
+            overflow: hidden;
+            border-left: 1px solid $color-border-light;
+            border-right: 1px solid $color-border-light;
+            border-bottom: 1px solid $color-border-light;
+            height: 30px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            text-align: center;
+        }
+        
+        td:hover {
+            background-color: $color-border-light;
+        }
+        
+        td:focus-within {
+            outline: none;
+        }
+        
+
+        .td-sticky {
+            border-right: 2px solid $color-border-light;
+            position: sticky;
+            right: 0;
+            box-shadow: -1px 1px 5px $color-shadow;
+            z-index: 3;
+            background-color: white;
+        }
+
+        .th-sticky {
+            box-shadow: -1px 0px 5px $color-shadow;
+            position: sticky;
+            right: 0;
+            z-index: 5;
+            border-right: 2px solid $color-border-light;
+            background-color: white;
+
+        }
+    }
+
+    #resize-bar {
+        z-index:10;
+        visibility: hidden;
+        position:fixed;
+        top:0;
+        left:0;
+        width:2px;
+        height:100%;
+        background-color: blue;
+        cursor:e-resize
+    }
+}
+
+
+
+._overlay {
+    overflow: hidden;
+    background-color: white;
+    box-shadow: 0px 0px 4px rgb(190, 189, 189);
+    border-radius: 6px;
+}

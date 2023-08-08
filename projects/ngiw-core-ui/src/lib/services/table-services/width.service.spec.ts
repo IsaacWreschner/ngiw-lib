@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CoreUiService } from './core-ui.service';
+import { WidthService } from './width.service';
 
-describe('CoreUiService', () => {
-  let service: CoreUiService;
+describe('WidthService', () => {
+  let service: WidthService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(CoreUiService);
+    service = TestBed.inject(WidthService);
   });
 
   it('should be created', () => {

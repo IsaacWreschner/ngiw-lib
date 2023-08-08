@@ -33,6 +33,10 @@ export class TableDataUtil implements IUtils {
         return _data;
     }
 
+    isExpandable = (row:any) => {
+        return this.hasChilds(row);
+    }
+
 
     isChild = (row:any) => {
         return _TableLayerService.getLayerOnRow(row, LAYER_NAME).isChild;

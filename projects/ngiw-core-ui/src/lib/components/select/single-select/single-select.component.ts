@@ -7,10 +7,10 @@ import { Component, Input, Output } from '@angular/core';
 })
 export class SingleSelectComponent {
   @Input() value: any = '';
-  @Input() placeholder: string = ''
-  @Input() options: { id: any, label?: string }[] = [];
+  @Input() placeholder: string = '';
+  @Input() options: { id: any, label: string }[] = [];
 
-  selectedValue = null;
+  selectedValue = null; 
 
   constructor() { }
 

@@ -28,13 +28,16 @@ export class TableGroupsUtil implements IUtils {
    }
 
    private propagateChange = () => {
-      this.$data.next(this.filterNonExpandedRows());
+      this.$data.next(this.filterRows());
    }
 
 
    expand = (row:any) => {
-    const isExpandable = _TableLayerService.getLayerOnRow(row,DATA_LAYER_NAME).hasChilds;
+    const isExpandable = _TableLayerService.getLayerOnRow(row,DATA_LAYER_NAME).hasChild;
     if (isExpandable) {
+      _TableLayerService.setLayerOnRow(row, TREE_LAYER_NAME,{
+        isExpanded:true
+      });
       _TableLayerService.getLayerOnRow(row,DATA_LAYER_NAME).childsRef.map((child:any) => {
         _TableLayerService.setLayerOnRow(child,TREE_LAYER_NAME,{
           isToggledOn:true
@@ -44,9 +47,16 @@ export class TableGroupsUtil implements IUtils {
     this.propagateChange();
    }
 
+   isExpanded = (row:any) => {
+      return _TableLayerService.getLayerOnRow(row, DATA_LAYER_NAME)?.isExpanded;
+   }
+
    hide = (row:any) => {
     const isExpandable = _TableLayerService.getLayerOnRow(row,DATA_LAYER_NAME).hasChilds;
     if (isExpandable) {
+      _TableLayerService.setLayerOnRow(row, TREE_LAYER_NAME,{
+        isExpanded:false
+      });
       _TableLayerService.getLayerOnRow(row,DATA_LAYER_NAME).childsRef.map((child:any) => {
         _TableLayerService.setLayerOnRow(child,TREE_LAYER_NAME,{
           isToggledOn:false
@@ -56,11 +66,9 @@ export class TableGroupsUtil implements IUtils {
     this.propagateChange();
    }
 
-filterNonExpandedRows = (limit = -1) => {
+   filterRows = (limit = -1) => {
   return this.data.filter((row: any) => {
-      return !_TableLayerService.getLayerOnRow(row,DATA_LAYER_NAME).isChild || _TableLayerService.getLayerOnRow(row,TREE_LAYER_NAME).isToggledOn;
+      return !_TableLayerService.getLayerOnRow(row,DATA_LAYER_NAME).isChild || _TableLayerService.getLayerOnRow(row,TREE_LAYER_NAME)?.isToggledOn;
   });
 }
-
-
 }
