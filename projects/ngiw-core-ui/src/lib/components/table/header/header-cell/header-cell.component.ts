@@ -1,9 +1,10 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter,ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'ngiw-header-cell',
   templateUrl: './header-cell.component.html',
-  styleUrls: ['./header-cell.component.scss']
+  styleUrls: ['./header-cell.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class HeaderCellComponent implements OnInit {
   @Input()showFilterSorter = false;
@@ -18,6 +19,7 @@ export class HeaderCellComponent implements OnInit {
   showPopover:boolean = false;
   currentSearchList:any[] = [];
   currentFilter = [];
+  isCreatingList:boolean = false;
   constructor() { }
 
   ngOnInit(): void {
@@ -36,8 +38,13 @@ export class HeaderCellComponent implements OnInit {
 
   public createSearchList() {
     if (!this.searchList && typeof this.createSearchListFn === 'function') {
-      this.currentSearchList = this.createSearchListFn();
-      this.currentSearchList.forEach(row => { if (typeof row.label === 'number')  row.label =  row.label.toString()})
+      this.isCreatingList = true;
+      setTimeout(() => {
+        this.currentSearchList = this.createSearchListFn();
+        this.currentSearchList.forEach(row => { if (typeof row.label === 'number')  row.label =  row.label.toString()});
+        this.isCreatingList = false;
+      })
+     
     }
    }
 

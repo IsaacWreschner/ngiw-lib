@@ -1,9 +1,10 @@
 <nz-select 
    nzShowSearch 
    nzAllowClear 
-   [nzPlaceHolder]="placeholder" 
+   [nzModel] = "ngiwValue"
+   [nzPlaceHolder]="ngiwPlaceholder" 
 >
- <nz-option *ngFor="let option of options" 
+ <nz-option *ngFor="let option of ngiwOptions" 
           [nzLabel]="option.label" 
           [nzValue]="option.id"></nz-option>
 </nz-select>

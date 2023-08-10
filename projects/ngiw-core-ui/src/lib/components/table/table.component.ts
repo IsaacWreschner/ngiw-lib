@@ -18,7 +18,7 @@ export class TableComponent {
   @Input() ngiwWidth!: number;
   @Input() ngiwIsLoading!: boolean;
   @Input() ngiwIsAdding!: boolean;
-  @Input() ngiwBindKeyEvents: boolean = true;
+  //@Input() ngiwBindKeyEvents: boolean = true;
   @Input() ngiwCellCtxMenu = {};
   @ContentChild('ngiwHeader', { static: false }) headerTemplateRef!: TemplateRef<any>;
   @ContentChild('ngiwBody', { static: false }) bodyTemplateRef!: TemplateRef<any>;
@@ -46,6 +46,7 @@ export class TableComponent {
   isScrolling: boolean = false;
   timeout!: any;
   table!: any;
+  activeCell:any = {}
   public positions = [
     new ConnectionPositionPair({
       originX: 'start',
@@ -62,11 +63,10 @@ export class TableComponent {
 
   ngOnInit(): void {
     this.onGetXRange({});
-    if (this.ngiwBindKeyEvents) {
+    /*if (this.ngiwBindKeyEvents) {
       this.funcRef = (e: any) => { this.handleKeyDown(e) }
       window.addEventListener('keydown', this.funcRef);
-    }
-
+    }*/
   }
 
   ngOnDestroy() {
@@ -166,6 +166,7 @@ export class TableComponent {
 
   onFocus(row: any, col: any) {
     this.focusCoordinates.col = col + this.XRangeBegin;
+    console.log(col,row,this.XRangeBegin,this.YRangeBegin)
     this.focusCoordinates.row = row + this.YRangeBegin;
     this._setActiveCell();
     this.detectChanges();
@@ -189,7 +190,7 @@ export class TableComponent {
     Array.from({ length: len - incremente }, (x, i) => this.XRange[i] = i + incremente);
     this.XRangeBegin = 0;
 
-  }
+  } 
 
 
   onGetContainersWidths(e: any) {
@@ -251,6 +252,6 @@ export class TableComponent {
   }
 
   private _setActiveCell() {
-    this.activeService.setActive(this.focusCoordinates.row, this.focusCoordinates.col)
+    this.activeCell = {row: this.focusCoordinates.row, col: this.focusCoordinates.col};
   }
 }

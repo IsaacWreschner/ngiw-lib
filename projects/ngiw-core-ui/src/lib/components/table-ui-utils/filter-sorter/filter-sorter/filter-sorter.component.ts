@@ -13,12 +13,12 @@ interface ISearch {
   styleUrls: ['./filter-sorter.component.scss']
 })
 export class FilterSorterComponent implements OnInit {
-  @Input() listSortBy: ISearch[] = [];
-  @Output() sorted = new EventEmitter();
+  @Input() ngiwListSortBy: ISearch[] = [];
+  @Input() ngiwIsCreatingList: boolean = false;
+  @Input() ngiwSearchList: ISearch[] = [];
+  @Output() ngiwSorted = new EventEmitter();
+  @Output() ngiwFilter = new EventEmitter();
 
-  @Input() searchList: ISearch[] = [];
-
-  @Output() filter = new EventEmitter();
   section: 'filter' | 'sort' | 'none' = 'none';
 
 
@@ -27,7 +27,7 @@ export class FilterSorterComponent implements OnInit {
   translatePrefix = 'table.header-cell.filter-sorter.';
   tmpSearchList: any;
   isFilterError: boolean = false;
-  isCreatingList: boolean = false;
+
   mode: "asc" | "desc" | "none" = "none";
   tmpSortList: any[] = [];
   sortId: any;
@@ -49,7 +49,7 @@ export class FilterSorterComponent implements OnInit {
 
   onInputSearch(event:any) {
     const searchPattern = event.target.value;
-    let filtered = this.searchList.filter(searchRow => searchRow.label.includes(searchPattern))
+    let filtered = this.ngiwSearchList.filter(searchRow => searchRow.label.includes(searchPattern))
     this.tmpSearchList = filtered;
   }
 
@@ -59,11 +59,11 @@ export class FilterSorterComponent implements OnInit {
       this.isFilterError = true;
       return;
     }
-    this.filter.emit(checked);
+    this.ngiwFilter.emit(checked);
   }
 
   onSort() {
-    this.sorted.emit({ prop: this.sortId, mode: this.mode });
+    this.ngiwSorted.emit({ prop: this.sortId, mode: this.mode });
   }
 
   onSectionSort() {
@@ -71,10 +71,10 @@ export class FilterSorterComponent implements OnInit {
   }
 
   _initSearchList() {
-    this.tmpSearchList = this.searchList;
-    this.tmpSortList = this.listSortBy;
-    if (this.listSortBy && this.listSortBy[0])
-      this.sortId = this.listSortBy[0].id;
+    this.tmpSearchList = this.ngiwSearchList;
+    this.tmpSortList = this.ngiwListSortBy;
+    if (this.ngiwListSortBy && this.ngiwListSortBy[0])
+      this.sortId = this.ngiwListSortBy[0].id;
   }
 
   onChangeSortMode = (mode:'asc' | 'desc') => {

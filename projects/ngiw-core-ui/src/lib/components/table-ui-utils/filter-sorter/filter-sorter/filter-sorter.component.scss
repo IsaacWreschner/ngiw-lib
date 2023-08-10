@@ -1,10 +1,10 @@
 $hover-color: rgb(245, 166, 69, .3);
 $mx-1: 0 1pt;
 $p-1: 1pt;
-
+::ng-deep .mat-checkbox-inner-container {width: 30px;height: 30px;}
 .filter-sorter-wrapper {
     .tab {
-        display: flex;
+        display: none;
         align-items: center;
 
         div {
@@ -32,9 +32,11 @@ $p-1: 1pt;
         }
 
         .filter-list {
-            max-width: 250px;
-            max-height: 250px;
+            max-width: 200px;
+            max-height: 150px;
             overflow: auto;
+            margin-top: 20px;
+            margin-bottom:20px;
         }
     }
  
@@ -46,3 +48,4 @@ $p-1: 1pt;
         overflow: auto;
     }
 }
+

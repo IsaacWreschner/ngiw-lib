@@ -29,6 +29,8 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzCascaderModule } from 'ng-zorro-antd/cascader';
 import { NzBackTopModule } from 'ng-zorro-antd/back-top';
 import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 
 import { TranslationPipe } from 'ngiw-core-utils';
@@ -41,6 +43,7 @@ import { StrechTableDirective } from './directives/table-directives/strech-table
 import { ResizableDirective } from './directives/table-directives/resizable/resizable.directive';
 import { VirtualScrollingYDirective } from './directives/table-directives/virtual-scrolling-y.directive';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { TextPrettifyComponent } from './components/pretify/text-prettify/text-prettify.component';
 
 
 
@@ -54,7 +57,8 @@ import { OverlayModule } from '@angular/cdk/overlay';
     VirtualScrollingXDirective,
     VirtualScrollingYDirective,
     StrechTableDirective,
-    ResizableDirective
+    ResizableDirective,
+    TextPrettifyComponent
   
   ],
   imports: [
@@ -77,12 +81,15 @@ import { OverlayModule } from '@angular/cdk/overlay';
     OverlayModule,
     NzBackTopModule,
     MatProgressBarModule,
-    NzSelectModule
+    NzSelectModule,
+    NzDividerModule,
+    NzIconModule
   ],
   exports: [
     FilterSorterComponent,
     HeaderCellComponent,
     TreeSelectComponent,
+    SingleSelectComponent,
     TableComponent
   ],
   providers: [TranslationPipe]

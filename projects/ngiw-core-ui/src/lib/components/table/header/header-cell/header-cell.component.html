@@ -14,9 +14,7 @@
         </div>
         <div class = "undo-filter" (click)="columnUndoFilter()" *ngIf="columnHasFilter()">
             <div matRipple>
-                <mat-icon>
-                    search_off
-                </mat-icon>
+                <span class = "filter-icon" nz-icon nzType="filter" nzTheme="outline"></span>
             </div>
         </div>
         <div class = "header-label">
@@ -30,7 +28,7 @@
 </div>
 
 <ng-template #filterSorter>
-    <ngiw-filter-sorter (filter)="onFilterCol($event)" [searchList]="currentSearchList">
+    <ngiw-filter-sorter (ngiwFilter)="onFilterCol($event)" [ngiwIsCreatingList] = "isCreatingList" [ngiwSearchList]="currentSearchList">
     </ngiw-filter-sorter>
 </ng-template>
 

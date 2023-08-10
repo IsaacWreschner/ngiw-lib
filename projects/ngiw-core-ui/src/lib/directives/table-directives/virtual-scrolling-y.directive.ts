@@ -147,7 +147,7 @@ export class VirtualScrollingYDirective {
     if (nthRow) {
       trTop = nthRow.getBoundingClientRect().y - tblTop;
       if (nthRow.children[indexColumn]) {
-        nthRow.children[indexColumn].focus();
+        //nthRow.children[indexColumn].focus();
       }
     }
 

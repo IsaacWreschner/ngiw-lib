@@ -3,9 +3,7 @@ import { IUtils } from "./Iutils";
 import { TableDataUtil } from "./tableData";
 import { _TableLayerService } from "./tableLayer";
 
-
-const DATA_LAYER_NAME = 'tableDataUtil';
-const TREE_LAYER_NAME = 'tableGroupUtil';
+const LAYER_NAME = 'tableGroupUtil';
 
 type DataGroupRow = {
     isChild:boolean,
@@ -21,8 +19,19 @@ export class TableGroupsUtil implements IUtils {
   private data:any[] = [];
   public $data:BehaviorSubject<any> = new BehaviorSubject([]);
 
+  
+  options:{ groupBy?:string |Function } | undefined;
+
+
+  constructor(options?:{ groupBy?:string |Function }) {
+      this.options = options;
+  }
+
   setData = (data: any) => {
     this.data = data;
+    if (this.options && this.options.groupBy) {
+      this.data = this.flatternData(data);
+    }
     this.propagateChange();
     return data;
    }
@@ -33,13 +42,13 @@ export class TableGroupsUtil implements IUtils {
 
 
    expand = (row:any) => {
-    const isExpandable = _TableLayerService.getLayerOnRow(row,DATA_LAYER_NAME).hasChild;
+    const isExpandable = this.hasChilds(row);
     if (isExpandable) {
-      _TableLayerService.setLayerOnRow(row, TREE_LAYER_NAME,{
+      _TableLayerService.setLayerOnRow(row, LAYER_NAME,{
         isExpanded:true
       });
-      _TableLayerService.getLayerOnRow(row,DATA_LAYER_NAME).childsRef.map((child:any) => {
-        _TableLayerService.setLayerOnRow(child,TREE_LAYER_NAME,{
+      _TableLayerService.getLayerOnRow(row,LAYER_NAME).childsRef.map((child:any) => {
+        _TableLayerService.setLayerOnRow(child,LAYER_NAME,{
           isToggledOn:true
         });
       });    
@@ -47,18 +56,14 @@ export class TableGroupsUtil implements IUtils {
     this.propagateChange();
    }
 
-   isExpanded = (row:any) => {
-      return _TableLayerService.getLayerOnRow(row, DATA_LAYER_NAME)?.isExpanded;
-   }
-
    hide = (row:any) => {
-    const isExpandable = _TableLayerService.getLayerOnRow(row,DATA_LAYER_NAME).hasChilds;
+    const isExpandable = this.hasChilds(row);
     if (isExpandable) {
-      _TableLayerService.setLayerOnRow(row, TREE_LAYER_NAME,{
+      _TableLayerService.setLayerOnRow(row, LAYER_NAME,{
         isExpanded:false
       });
-      _TableLayerService.getLayerOnRow(row,DATA_LAYER_NAME).childsRef.map((child:any) => {
-        _TableLayerService.setLayerOnRow(child,TREE_LAYER_NAME,{
+      _TableLayerService.getLayerOnRow(row, LAYER_NAME).childsRef.map((child:any) => {
+        _TableLayerService.setLayerOnRow(child, LAYER_NAME,{
           isToggledOn:false
         });
       });   
@@ -66,9 +71,64 @@ export class TableGroupsUtil implements IUtils {
     this.propagateChange();
    }
 
+   isExpanded = (row:any) => {
+      return _TableLayerService.getLayerOnRow(row, LAYER_NAME)?.isExpanded;
+   }
+
+ 
+
    filterRows = (limit = -1) => {
-  return this.data.filter((row: any) => {
-      return !_TableLayerService.getLayerOnRow(row,DATA_LAYER_NAME).isChild || _TableLayerService.getLayerOnRow(row,TREE_LAYER_NAME)?.isToggledOn;
-  });
-}
+    return this.data.filter((row: any) => {
+        return this.isChild(row) || _TableLayerService.getLayerOnRow(row, LAYER_NAME)?.isToggledOn;
+    });
+  }
+
+
+
+
+  isExpandable = (row:any) => {
+      return this.hasChilds(row);
+  }
+
+
+  isChild = (row:any) => {
+      return _TableLayerService.getLayerOnRow(row, LAYER_NAME)?.isChild;
+  }
+
+  private flatternData = (data:any):any[] => {
+      let toggleCounter = 0;
+      const _data:any[] = []
+      data.forEach((row:any, i:number) => {
+          const parentLayer = {
+              hasChild:this.hasChilds(row),
+              idx: i + toggleCounter,
+              isChild:false,
+              childsRef:[] as any
+          }
+          _TableLayerService.setLayerOnRow(row,LAYER_NAME, parentLayer )
+          _data.push(row);
+          this.getChilds(row)?.forEach((child:any,j:number) => {
+              const childLayer = {
+                  idx: i + toggleCounter + j + 1,
+                  isChild:true
+              }
+              child.isChild = true;
+              child.parent = row;
+              _TableLayerService.setLayerOnRow(child,LAYER_NAME,childLayer)
+              parentLayer.childsRef.push(child)
+              _data.push(child);
+          })
+          toggleCounter += (this.getChilds(row)?.length || 0);
+        });
+      return _data;
+  }
+
+  private getChilds = (row:any) => {
+      return this.options?.groupBy ? row[this.options.groupBy as string] : [];
+   }
+
+   private hasChilds(row: any): boolean {
+       return !!this.getChilds(row) && this.getChilds(row).length > 0;
+     }
+
 }

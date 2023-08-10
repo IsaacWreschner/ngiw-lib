@@ -13,16 +13,19 @@
     <div class="section-filter" *ngIf="section === 'filter'">
       <div>
         <div>
-          <mat-form-field>
-            <input (input) = "onInputSearch($event);" id="input-filter" 
-              [placeholder]="translatePrefix + 'searchFromList' | ngiwTranslate" matInput>
-          </mat-form-field>
+          <nz-input-group nzPrefixIcon="user">
+            <input (input) = "onInputSearch($event);" 
+                    id="input-filter" 
+                    [placeholder]="translatePrefix + 'searchFromList' | ngiwTranslate"
+                    nz-input />
+           </nz-input-group>
         </div>
-        <div class = "filter-list-is-creating" *ngIf="isCreatingList">
+        <nz-divider></nz-divider>
+        <div class = "filter-list-is-creating" *ngIf="ngiwIsCreatingList">
           <mat-spinner diameter="20"></mat-spinner>
         </div>
-        <div *ngIf="!isCreatingList" class="filter-list">
-          <div class=" flex-start" *ngFor="let search of tmpSearchList">
+        <div *ngIf="!ngiwIsCreatingList" class="filter-list">
+          <div style = "font-size:12px" *ngFor="let search of tmpSearchList">
             <mat-checkbox [checked]="search.checked" (change)="search.checked = $event.checked;isFilterError = false;">
               <span>
                 {{search.label}}
@@ -30,6 +33,7 @@
             </mat-checkbox>
           </div>
         </div>
+        <nz-divider></nz-divider>
         <div>
           <button nz-button nzType="primary" (click)="onFilter()">{{ translatePrefix + 'search' | ngiwTranslate}}</button>
         </div>
