@@ -4,10 +4,7 @@ import { NgiwCoreUtilsModule } from 'ngiw-core-utils';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { registerLocaleData } from '@angular/common';
-import he from '@angular/common/locales/he';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 
 /** material */
 import { MatIconModule } from '@angular/material/icon'
@@ -35,7 +32,6 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 
 import { TranslationPipe } from 'ngiw-core-utils';
 import { HeaderCellComponent } from './components/table/header/header-cell/header-cell.component';
-import { TreeSelectComponent } from './components/select/tree-select/tree-select.component';
 import { SingleSelectComponent } from './components/select/single-select/single-select.component';
 import { TableComponent } from './components/table/table.component';
 import { VirtualScrollingXDirective } from './directives/table-directives/virtual-scrolling-x.directive';
@@ -44,6 +40,8 @@ import { ResizableDirective } from './directives/table-directives/resizable/resi
 import { VirtualScrollingYDirective } from './directives/table-directives/virtual-scrolling-y.directive';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { TextPrettifyComponent } from './components/pretify/text-prettify/text-prettify.component';
+import { MultiSelectComponent } from './components/select/multiselect/multiselect.component';
+
 
 
 
@@ -51,7 +49,7 @@ import { TextPrettifyComponent } from './components/pretify/text-prettify/text-p
   declarations: [
     FilterSorterComponent,
     HeaderCellComponent,
-    TreeSelectComponent,
+    MultiSelectComponent,
     SingleSelectComponent,
     TableComponent,
     VirtualScrollingXDirective,
@@ -88,7 +86,7 @@ import { TextPrettifyComponent } from './components/pretify/text-prettify/text-p
   exports: [
     FilterSorterComponent,
     HeaderCellComponent,
-    TreeSelectComponent,
+    MultiSelectComponent,
     SingleSelectComponent,
     TableComponent
   ],

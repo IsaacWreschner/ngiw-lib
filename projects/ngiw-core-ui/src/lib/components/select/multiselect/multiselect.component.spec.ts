@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TreeSelectComponent } from './tree-select.component';
+import { TreeSelectComponent } from './multiselect.component';
 
 describe('TreeSelectComponent', () => {
   let component: TreeSelectComponent;

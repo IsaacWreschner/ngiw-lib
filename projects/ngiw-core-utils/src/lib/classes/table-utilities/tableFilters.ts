@@ -100,7 +100,7 @@ export class TableFiltersUtils implements IUtils {
     scanRows = (rows:any,filters:{ [key: string]: Filter }) => {
         let rowScanned = 0;
         rows?.forEach((row:any) => {
-            if (this.scanRow(row,filters)){
+            if (this.scanRow(row,filters)) {
                 rowScanned ++;
             }
         });

@@ -1,4 +1,4 @@
-import { Component, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'ngiw-select',
@@ -10,6 +10,7 @@ export class SingleSelectComponent {
   @Input() ngiwPlaceholder: string = '';
   @Input() ngiwOptions: { id: any, label: string }[] = [];
 
+  @Output() valueChanged = new EventEmitter();
   selectedValue = null; 
 
   constructor() { }
@@ -18,5 +19,9 @@ export class SingleSelectComponent {
   }
 
   ngOnDestroy() {
+  }
+
+  onChanges(value:any): void { 
+    this.valueChanged.emit(value);
   }
 }

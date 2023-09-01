@@ -7,8 +7,8 @@ import { Component, Input } from '@angular/core';
 })
 export class TextPrettifyComponent {
   @Input() ngiwText = '';
-  @Input() hightlightPattern = '';
-  @Input() hightlighColor = '';
+  @Input() ngiwHightlightPattern = '';
+  @Input() ngiwHightlighColor = '';
   constructor() { }
 
   ngOnInit(): void {

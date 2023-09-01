@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 
 
 type Node = {
@@ -9,18 +8,20 @@ type Node = {
   isLeaf?:boolean
 }
 @Component({
-  selector: 'ngiw-tree-select',
-  templateUrl: './tree-select.component.html',
-  styleUrls: ['./tree-select.component.scss']
+  selector: 'ngiw-multiselect',
+  templateUrl: './multiselect.component.html',
+  styleUrls: ['./multiselect.component.scss']
 })
-export class TreeSelectComponent {
+export class MultiSelectComponent {
   @Input() width:number = 200;
 
-  @Input() options!: Node[];
+  @Input() ngiwOptions!: Node[];
+
+  @Input() ngiwPlaceholder!: string;
 
   @Input() isParentSelectable:boolean = true;
 
-  @Input() value:any | any[] = 12;
+  @Input() ngiwValue:any | any[] = 12;
   @Output() valueChanged = new EventEmitter();
 
   childToParent: { [key: number]: number } = {};
@@ -40,7 +41,7 @@ export class TreeSelectComponent {
   }
 
   setChildToParent = () => {
-    this.options.forEach((parent:Node) => {
+    this.ngiwOptions.forEach((parent:Node) => {
       if (this.isParentSelectable && (parent.children as any)[0].label !== 'בחר הכל') {
         parent.children?.unshift(
           {
@@ -57,18 +58,16 @@ export class TreeSelectComponent {
   }
 
   setModelFromId = () => {
-    let val =  this.value
-    if (typeof this.value === 'object') {
-          val = this.value[0];
+    let val =  this.ngiwValue
+    if (typeof this.ngiwValue === 'object') {
+          val = this.ngiwValue[0];
     }
-    this.values = [this.childToParent[val], JSON.stringify(this.value)];
-    console.log(this.values)
+    this.values = [this.childToParent[val], JSON.stringify(this.ngiwValue)];
   }
 
 
 
   onChanges(values: string[]): void {
-    console.log(values,JSON.parse(values[1]), this.value);
     this.values = values;
     this.valueChanged.emit(values[1]);
   }

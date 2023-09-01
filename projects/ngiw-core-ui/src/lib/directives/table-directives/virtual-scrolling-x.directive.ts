@@ -125,7 +125,7 @@ export class VirtualScrollingXDirective {
       
    }
  
-   private _onKeyRight(indexRow:number,indexColumn:number){ 
+   private _onKeyRight(indexRow:number,indexColumn:number) { 
     let tblLeft = this._tblWrapperLeft();
     let tdLeft;
     let tdIndex = indexColumn  - this.XRange[0];
