@@ -138,7 +138,6 @@ export class VirtualScrollingYDirective {
   }
 
   private _onKeyDown(indexRow: number, indexColumn: number) {
-    console.log(indexColumn)
     let height = this._tblWrapperHeight();
     let tblTop = this._tblWrapperTop();
     let trTop;
@@ -152,13 +151,11 @@ export class VirtualScrollingYDirective {
     }
 
     if (trTop && height - trTop < 50) {
-      console.log('scroll 50')
       this._scroll(50);
     }
   }
 
   private _onKeyUp(indexRow: number, indexColumn: number) {
-    console.log(indexColumn)
     let trTop;
     let tblTop = this._tblWrapperTop();
     let trIndex = indexRow - this.YRange[0];

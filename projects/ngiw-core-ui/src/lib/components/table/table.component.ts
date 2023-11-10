@@ -166,7 +166,6 @@ export class TableComponent {
 
   onFocus(row: any, col: any) {
     this.focusCoordinates.col = col + this.XRangeBegin;
-    console.log(col,row,this.XRangeBegin,this.YRangeBegin)
     this.focusCoordinates.row = row + this.YRangeBegin;
     this._setActiveCell();
     this.detectChanges();

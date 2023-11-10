@@ -51,7 +51,6 @@ export class VirtualScrollingXDirective {
   } 
  
   private _vsManager(){
-    console.log(this._getHeadAndRowsHeight())
     if(!this._getHeadAndRowsHeight()) {
       return;
     }
@@ -62,7 +61,6 @@ export class VirtualScrollingXDirective {
     currScrollPosition = this._preventScrollPositionOverload(currScrollPosition,
          scrollBarWidths,columnsDispatchedWidth);  /*prevent curr scroll position to overload */
     this.currScrollPosition = currScrollPosition;
-    console.log(amountOfColumnsToDispatch)
     this._setXRange(currScrollPosition,amountOfColumnsToDispatch);//set the height of the virtual containers */
     this._setVirtualContainers(currScrollPosition,scrollBarWidths,columnsDispatchedWidth);
     this.ngiwGetXRange.emit(this.XRange);
@@ -114,7 +112,6 @@ export class VirtualScrollingXDirective {
     let tdLeft;
     let tdIndex = indexColumn  - this.XRange[0];
     let td = this._nthRow(indexRow + 2)?.children[tdIndex];
-    console.log(indexColumn)
     if(td){
        tdLeft = td.getBoundingClientRect().x - tblLeft;
        td.focus();

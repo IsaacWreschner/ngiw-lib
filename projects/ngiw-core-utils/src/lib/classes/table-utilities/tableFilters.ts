@@ -120,11 +120,23 @@ export class TableFiltersUtils implements IUtils {
     }
 
     matchFreeSearchPattern = (row: any) => {
-        return !this.freeSearchPattern || Object.keys(row)
-            .filter(key =>
-                typeof (row as any)[key] === 'string'
-                && this.freeSearchProps.includes(key)
-                && (row as any)[key].includes(this.freeSearchPattern)).length > 0
+         const castedRow:any = {};
+         Object.entries(row).forEach(entry => {
+            const key = entry[0];
+            const value = entry[1];
+            if (typeof value === 'number') {
+                castedRow[key] = value.toString();
+            } else {
+                castedRow[key] = value;
+            }          
+         })
+        const matchedColumns = Object.keys(castedRow)
+        .filter(key =>
+            typeof (castedRow as any)[key] === 'string'
+            && this.freeSearchProps.includes(key)
+            && (castedRow as any)[key].includes(this.freeSearchPattern))
+      
+        return !this.freeSearchPattern || matchedColumns.length > 0
     }
 
     scanFilters = (row: any) => {
