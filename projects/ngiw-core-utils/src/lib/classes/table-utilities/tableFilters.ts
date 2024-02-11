@@ -16,21 +16,20 @@ type Filter = {
 
 export class TableFiltersUtils implements IUtils {
     private data: any[] = [];
-    private filteredData: any[] = [];
     private freeSearchProps: string[] = []
     private filters: { [key: string]: Filter };
-    private childFilters: { [key: string]: Filter }
+    //private childFilters: { [key: string]: Filter }
     public freeSearchPattern = '';
     public $data:BehaviorSubject<any> = new BehaviorSubject([]);
     timeout = {};
     constructor(options: {
         freeSearchProps?: string[],
         filters?: { [key: string]: Filter },
-        childFilters?: { [key: string]: Filter }
+        /*childFilters?: { [key: string]: Filter }*/
     }) {
         this.freeSearchProps = options.freeSearchProps || [];
         this.filters = options.filters || {};
-        this.childFilters = options.childFilters || {};
+        /*this.childFilters = options.childFilters || {};*/
     }
 
     private propagateChange = () => {
@@ -65,10 +64,10 @@ export class TableFiltersUtils implements IUtils {
         this.propagateChange();
     }
 
-    setChildFilterKey = (filter:string,key:any) => {
+    /*setChildFilterKey = (filter:string,key:any) => {
         this.childFilters[filter].key = key;
         this.propagateChange();
-    }
+    }*/
 
 
 
@@ -81,17 +80,17 @@ export class TableFiltersUtils implements IUtils {
             }
             if (!_TableLayerService.getLayerOnRow(row,'tableDataUtil')?.isChild) {
                 const isParent = _TableLayerService.getLayerOnRow(row,'tableDataUtil')?.isParent;
-                let childsScanned = this.scanRows(row.courses,this.childFilters);
-                lastParentFiltered = this.matchFreeSearchPattern(row) && this.scanFilters(row) && (childsScanned > 0 || !isParent);
-                row.childsScanned = childsScanned;
+                //let childsScanned = this.scanRows(row.courses,this.childFilters);
+                lastParentFiltered = this.matchFreeSearchPattern(row) && this.scanFilters(row) && (/*childsScanned > 0 || */!isParent);
+                //row.childsScanned = childsScanned;
                 if (lastParentFiltered) {
                     filteredCounter ++;
                 }
                 return lastParentFiltered;
             }
             else {
-                const filtered = this.scanChildFilters(row);
-                return (lastParentFiltered && filtered);
+                //const filtered = this.scanChildFilters(row);
+                return (lastParentFiltered /*&& filtered*/);
             }
         });
     }
@@ -143,9 +142,9 @@ export class TableFiltersUtils implements IUtils {
         return this.scanRow(row,this.filters)
     }
 
-    scanChildFilters = (row: any) => {
+    /*scanChildFilters = (row: any) => {
         return this.scanRow(row,this.childFilters)
-    }
+    }*/
 
     matchFilter = (row: any, prop: string, filter: Filter) => {
         const key:any = filter.key;
@@ -156,6 +155,4 @@ export class TableFiltersUtils implements IUtils {
             default: return false;
         }
     }
-
-
 }

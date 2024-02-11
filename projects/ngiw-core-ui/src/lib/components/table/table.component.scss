@@ -16,6 +16,7 @@
             top: 0px;
         }
 
+      
         th {
             position: sticky;
             top: 0px;
@@ -80,6 +81,14 @@
             background-color: white;
 
         }
+
+        tr:nth-child(odd) {
+            background-color: rgb(245, 242, 242);
+            .td-sticky {
+                background-color: rgb(245, 242, 242);
+            }
+         }
+
     }
 
     #resize-bar {

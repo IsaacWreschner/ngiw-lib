@@ -12,7 +12,7 @@
                 </div>
             </div>
         </div>
-        <div class = "undo-filter" (click)="columnUndoFilter()" *ngIf="columnHasFilter()">
+        <div class = "undo-filter" (click)="$event.stopPropagation(); columnUndoFilter()" *ngIf="columnHasFilter()">
             <div matRipple>
                 <span class = "filter-icon" nz-icon nzType="filter" nzTheme="outline"></span>
             </div>
@@ -28,7 +28,7 @@
 </div>
 
 <ng-template #filterSorter>
-    <ngiw-filter-sorter (ngiwFilter)="onFilterCol($event)" [ngiwIsCreatingList] = "isCreatingList" [ngiwSearchList]="currentSearchList">
+    <ngiw-filter-sorter (ngiwFilter)="onFilterCol($event)" [ngiwIsCreatingList] = "isCreatingList" [$ngiwSearchList]="currentSearchList">
     </ngiw-filter-sorter>
 </ng-template>
 

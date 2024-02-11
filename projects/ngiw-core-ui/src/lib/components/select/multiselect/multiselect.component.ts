@@ -22,26 +22,58 @@ export class MultiSelectComponent {
   @Input() isParentSelectable:boolean = true;
 
   @Input() ngiwValue:any | any[] = 12;
+
+  @Input() ngiwTransform: any = {
+       value: 'parentId',
+       label: 'name',
+       children: {
+        propInParent: 'branches',
+          value: 'id',
+          label: 'branch'
+       },
+       
+  }
   @Output() valueChanged = new EventEmitter();
 
   childToParent: { [key: number]: number } = {};
 
-  values: any[] = [];
+
 
   constructor() { }
 
   ngOnInit(): void {
+    this.transformOptions(this.ngiwOptions, this.ngiwTransform);
     this.setChildToParent();  
   }
 
   ngOnChanges(e:any){
-    if (e.options) {
+    if (e.ngiwOptions) {
+      this.transformOptions(e.ngiwOptions.currentValue, this.ngiwTransform);
       this.setChildToParent();
     }
   }
 
+  transformOptions = (options:any, transform:any) => {
+    console.log(options)
+    options?.forEach((parent:Node) => {
+      if (transform.label) {
+        parent.label = (parent as any)[transform.label];
+      }
+      if (transform.value) {
+        parent.value = (parent as any)[transform.value];
+      }
+      if (transform.children && transform.children.propInParent) {
+        parent.children = (parent as any)[transform.children.propInParent];
+        const childTransform = transform.children;
+        if (parent.children) {
+          this.transformOptions(parent.children, childTransform);
+        } 
+      } 
+    });
+  }
+
   setChildToParent = () => {
-    this.ngiwOptions.forEach((parent:Node) => {
+    this.ngiwOptions?.forEach((parent:Node) => {
       if (this.isParentSelectable && (parent.children as any)[0].label !== 'בחר הכל') {
         parent.children?.unshift(
           {
@@ -54,21 +86,21 @@ export class MultiSelectComponent {
         this.childToParent[child.value] = parent.value;
       })
     });
-    this.setModelFromId();
+    //this.setModelFromId();
   }
 
-  setModelFromId = () => {
+  onValueChanges(values: string[]): void {
+    console.log(this.ngiwValue)
+    this.valueChanged.emit(values[1]);
+  }
+}
+
+/**
+ *  setModelFromId = () => {
     let val =  this.ngiwValue
     if (typeof this.ngiwValue === 'object') {
           val = this.ngiwValue[0];
     }
     this.values = [this.childToParent[val], JSON.stringify(this.ngiwValue)];
   }
-
-
-
-  onChanges(values: string[]): void {
-    this.values = values;
-    this.valueChanged.emit(values[1]);
-  }
-}
+ */

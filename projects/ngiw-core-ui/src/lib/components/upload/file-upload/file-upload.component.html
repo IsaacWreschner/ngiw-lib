@@ -1,0 +1,30 @@
+<div class = 'upload-wrapper'>
+    <nz-upload 
+        [nzAction]="ngiwUploadPath" 
+        [nzAccept] = "ngiwFormat"
+        [nzListType]="ngiwDisplay"
+        [nzLimit] = "isFilesUploadUnlimited() ? 0 : getMaxFilesToUpload()"
+        [nzMultiple] = "isMultiSelectEnabled()"
+        [(nzFileList)]="ngiwFiles" 
+        [nzShowButton]="canUploadMoreFiles()" 
+        [nzPreview]="handlePreview"
+        (nzChange) = "onUploadStateChanged()"
+        >
+        <div>            
+            <div> <span nz-icon nzType="plus"></span> {{ ngiwAddFileLabel }} </div>
+        </div>
+      </nz-upload>
+</div>
+
+
+<!--Image preview-->
+<nz-modal 
+  [nzVisible]="previewVisible" 
+  [nzContent]="modalContent" 
+  [nzFooter]="null"
+  (nzOnCancel)="previewVisible = false"
+  >
+    <ng-template #modalContent>
+        <img [src]="previewImage" [ngStyle]="{ width: '100%' }" />
+    </ng-template>
+</nz-modal>

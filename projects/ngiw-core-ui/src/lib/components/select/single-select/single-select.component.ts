@@ -8,7 +8,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class SingleSelectComponent {
   @Input() ngiwValue: any = '';
   @Input() ngiwPlaceholder: string = '';
-  @Input() ngiwOptions: { id: any, label: string }[] = [];
+  @Input() ngiwOptions: { value: any, label: string }[] = [];
+  @Input() ngiwTransform: {value: any, label: any} = {} as any;
 
   @Output() valueChanged = new EventEmitter();
   selectedValue = null; 
@@ -21,7 +22,16 @@ export class SingleSelectComponent {
   ngOnDestroy() {
   }
 
-  onChanges(value:any): void { 
+  onValueChanges(value:any): void { 
+    console.log(value);
     this.valueChanged.emit(value);
+  }
+
+  getLabel = (option:any) => {
+    return this.ngiwTransform?.label ? option[this.ngiwTransform.label] : option.label;
+  }
+
+  getValue = (option:any) => {
+    return this.ngiwTransform?.value ? option[this.ngiwTransform.value] : option.value;
   }
 }

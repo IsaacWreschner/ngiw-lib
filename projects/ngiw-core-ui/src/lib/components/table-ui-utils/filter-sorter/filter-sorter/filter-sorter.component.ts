@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TranslationPipe } from 'ngiw-core-utils';
+import {Observable} from 'rxjs'
 
 
 interface ISearch {
@@ -15,7 +16,7 @@ interface ISearch {
 export class FilterSorterComponent implements OnInit {
   @Input() ngiwListSortBy: ISearch[] = [];
   @Input() ngiwIsCreatingList: boolean = false;
-  @Input() ngiwSearchList: ISearch[] = [];
+  @Input() $ngiwSearchList!: Observable<ISearch[]>;
   @Output() ngiwSorted = new EventEmitter();
   @Output() ngiwFilter = new EventEmitter();
 
@@ -26,6 +27,7 @@ export class FilterSorterComponent implements OnInit {
 
   translatePrefix = 'table.header-cell.filter-sorter.';
   tmpSearchList: any;
+  fullSearchList: any;
   isFilterError: boolean = false;
 
   mode: "asc" | "desc" | "none" = "none";
@@ -33,8 +35,14 @@ export class FilterSorterComponent implements OnInit {
   sortId: any;
 
   ngOnInit(): void {
-    this._initSearchList();
     this.onSectionFilter();
+
+    this.$ngiwSearchList?.subscribe((list:any) => {
+      this._initSearchList(list);
+    })
+    //setInterval(() => {
+      //console.log(this.ngiwSearchList)
+    //},1000)
   }
 
   onSectionFilter() {
@@ -49,8 +57,7 @@ export class FilterSorterComponent implements OnInit {
 
   onInputSearch(event:any) {
     const searchPattern = event.target.value;
-    let filtered = this.ngiwSearchList.filter(searchRow => searchRow.label.includes(searchPattern))
-    this.tmpSearchList = filtered;
+    this.tmpSearchList = this.top100(this.filter(searchPattern));
   }
 
   onFilter() {
@@ -70,8 +77,10 @@ export class FilterSorterComponent implements OnInit {
     this.section = 'sort';
   }
 
-  _initSearchList() {
-    this.tmpSearchList = this.ngiwSearchList;
+  _initSearchList(list:any) {
+    console.log(list);
+    this.fullSearchList = list;
+    this.tmpSearchList =  this.top100(this.filter(''));
     this.tmpSortList = this.ngiwListSortBy;
     if (this.ngiwListSortBy && this.ngiwListSortBy[0])
       this.sortId = this.ngiwListSortBy[0].id;
@@ -82,11 +91,12 @@ export class FilterSorterComponent implements OnInit {
     this.onSort();
   }
 
-  ngOnChanges = (e:any) => {
-    console.log(e)
-      if (e.searchList) {
-        this._initSearchList()
-      }
+  top100 = (list:any) => {
+      return list.filter((x:any,i:number) => i < 100);
+  }
+
+  filter = (searchPattern:string) => {
+    return this.fullSearchList.filter((searchRow:any) => searchRow.label !== '' && searchRow.label?.includes(searchPattern))
   }
 }
 

@@ -58,9 +58,9 @@
                     >
                     </ng-container>
                 </td>
-                <td  *ngFor= "let col of XRange"
-                   
-                     (contextmenu) = "handleContextMenu($event,row,col)"
+                                     <!--(contextmenu) = "handleContextMenu($event,row,col)"-->
+                <td  *ngFor= "let col of XRange"                   
+
                      cdkOverlayOrigin
                      #trigger="cdkOverlayOrigin"
                     (click) = "onFocus(row ,col)"

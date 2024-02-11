@@ -3,7 +3,6 @@ import { FilterSorterComponent } from './components/table-ui-utils/filter-sorter
 import { NgiwCoreUtilsModule } from 'ngiw-core-utils';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 /** material */
@@ -28,6 +27,9 @@ import { NzBackTopModule } from 'ng-zorro-antd/back-top';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
+import { NzUploadModule } from 'ng-zorro-antd/upload';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
 
 import { TranslationPipe } from 'ngiw-core-utils';
@@ -41,7 +43,8 @@ import { VirtualScrollingYDirective } from './directives/table-directives/virtua
 import { OverlayModule } from '@angular/cdk/overlay';
 import { TextPrettifyComponent } from './components/pretify/text-prettify/text-prettify.component';
 import { MultiSelectComponent } from './components/select/multiselect/multiselect.component';
-
+import { FileUploadComponent } from './components/upload/file-upload/file-upload.component';
+import { MarkdownComponent } from './components/pretify/markdown/markdown.component';
 
 
 
@@ -56,8 +59,10 @@ import { MultiSelectComponent } from './components/select/multiselect/multiselec
     VirtualScrollingYDirective,
     StrechTableDirective,
     ResizableDirective,
-    TextPrettifyComponent
-  
+    TextPrettifyComponent,
+    FileUploadComponent,
+    MarkdownComponent
+
   ],
   imports: [
     ReactiveFormsModule,
@@ -81,14 +86,19 @@ import { MultiSelectComponent } from './components/select/multiselect/multiselec
     MatProgressBarModule,
     NzSelectModule,
     NzDividerModule,
-    NzIconModule
+    NzIconModule,
+    NzCheckboxModule,
+    NzUploadModule,
+    NzModalModule
   ],
   exports: [
     FilterSorterComponent,
     HeaderCellComponent,
     MultiSelectComponent,
     SingleSelectComponent,
-    TableComponent
+    FileUploadComponent,
+    TableComponent,
+    MarkdownComponent
   ],
   providers: [TranslationPipe]
 })

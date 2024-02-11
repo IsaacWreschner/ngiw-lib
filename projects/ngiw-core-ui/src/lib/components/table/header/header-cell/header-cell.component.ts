@@ -1,5 +1,5 @@
-import { Component, Input, OnInit, Output, EventEmitter,ViewEncapsulation } from '@angular/core';
-
+import { Component, Input, OnInit, Output, EventEmitter, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 @Component({
   selector: 'ngiw-header-cell',
   templateUrl: './header-cell.component.html',
@@ -7,25 +7,25 @@ import { Component, Input, OnInit, Output, EventEmitter,ViewEncapsulation } from
   encapsulation: ViewEncapsulation.None
 })
 export class HeaderCellComponent implements OnInit {
-  @Input()showFilterSorter = false;
-  @Input()headerLabel:string = '';
-  @Input()searchList:any[] = undefined as any;
-  @Input()createSearchListFn:() => any[] = undefined as any;
-  
-  @Output()onFilter = new EventEmitter();
-  @Output()onUndoFilter = new EventEmitter()
+  @Input() showFilterSorter = false;
+  @Input() headerLabel: string = '';
+  @Input() searchList: any[] = undefined as any;
+  @Input() createSearchListFn: () => any[] = undefined as any;
 
-  locker:boolean = false;
-  showPopover:boolean = false;
-  currentSearchList:any[] = [];
+  @Output() onFilter = new EventEmitter();
+  @Output() onUndoFilter = new EventEmitter()
+
+  locker: boolean = false;
+  showPopover: boolean = false;
+  currentSearchList: BehaviorSubject<any> = new BehaviorSubject([]);
   currentFilter = [];
-  isCreatingList:boolean = false;
-  constructor() { }
+  isCreatingList: boolean = false;
+  constructor(private ref: ChangeDetectorRef) { }
 
   ngOnInit(): void {
   }
 
-  public columnHasFilter(){
+  public columnHasFilter() {
     return this.currentFilter.length > 0;
   }
 
@@ -40,42 +40,42 @@ export class HeaderCellComponent implements OnInit {
     if (!this.searchList && typeof this.createSearchListFn === 'function') {
       this.isCreatingList = true;
       setTimeout(() => {
-        this.currentSearchList = this.createSearchListFn();
-        this.currentSearchList.forEach(row => { if (typeof row.label === 'number')  row.label =  row.label.toString()});
+        const list = this.createSearchListFn();
+        list.forEach(row => { if (typeof row.label === 'number') row.label = row.label.toString() });
         this.isCreatingList = false;
-      })
-     
+        this.currentSearchList.next(list);
+      });
     }
-   }
-
-   
-
-   public onSortColumn(event?:any) {
-     if(event){
-      event.preventDefault();
-      event.stopPropagation();
-     }
   }
 
-   public onFilterCol(event:any) {
-     this.showPopover = false;
-     this.lockPopover();
-     this.currentFilter = event;
-     this.onFilter.emit(event);
-   }
 
-   lockPopover = () => {
+
+  public onSortColumn(event?: any) {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  }
+
+  public onFilterCol(event: any) {
+    this.showPopover = false;
+    this.lockPopover();
+    this.currentFilter = event;
+    this.onFilter.emit(event);
+  }
+
+  lockPopover = () => {
     this.locker = true;
-     setTimeout(() => {
+    setTimeout(() => {
       this.locker = false;
-     },500)
-   }
+    }, 500)
+  }
 
-   public onPopoverVisibleChange() {
+  public onPopoverVisibleChange() {
     if (this.locker) {
       return;
     }
-      this.showPopover = !this.showPopover;
+    this.showPopover = !this.showPopover;
   }
 }
 

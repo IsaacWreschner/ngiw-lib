@@ -14,7 +14,8 @@
       <div>
         <div>
           <nz-input-group nzPrefixIcon="user">
-            <input (input) = "onInputSearch($event);" 
+            <input (input) = "onInputSearch($event);"
+                   autocomplete="off" 
                     id="input-filter" 
                     [placeholder]="translatePrefix + 'searchFromList' | ngiwTranslate"
                     nz-input />
@@ -26,11 +27,14 @@
         </div>
         <div *ngIf="!ngiwIsCreatingList" class="filter-list">
           <div *ngFor="let search of tmpSearchList">
-            <mat-checkbox [checked]="search.checked" (change)="search.checked = $event.checked;isFilterError = false;">
-              <span>
-                {{search.label}}
-              </span>
-            </mat-checkbox>
+            <label 
+            (ngModelChange)="search.checked = $event.checked;isFilterError = false;" 
+             [(ngModel)]="search.checked"
+              nz-checkbox 
+              (click)="$event.stopPropagation()" 
+             >
+             {{search.label}}
+           </label>
           </div>
         </div>
         <nz-divider></nz-divider>
