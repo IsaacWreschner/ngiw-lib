@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start-showcase-app": "concurrently \"npm:watch-core-utils\" \"npm:watch-core-ui\" \"ng serve --configuration development\"",
     "build": "ng build ngiw-core-utils && ng build ngiw-core-ui",
     "watch-core-utils": "ng build ngiw-core-utils --watch --configuration development",
     "watch-core-ui": "ng build ngiw-core-ui --watch --configuration development",
@@ -23,7 +23,6 @@
     "@angular/router": "^16.1.0",
     "marked": "^11.0.0",
     "ng-zorro-antd": "16.1.0",
-    "ngiw-core-utils": "file:./dist/ngiw-core-utils",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"

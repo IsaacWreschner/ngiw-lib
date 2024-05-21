@@ -6,7 +6,10 @@
     "declaration": true,
     "declarationMap": true,
     "inlineSources": true,
-    "types": []
+    "types": [],
+    "ngiw-core-utils": [
+      "dist/ngiw-core-utils"
+    ]
   },
   "exclude": [
     "**/*.spec.ts"

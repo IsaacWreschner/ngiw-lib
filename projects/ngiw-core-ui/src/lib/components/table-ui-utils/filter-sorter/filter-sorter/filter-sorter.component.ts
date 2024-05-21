@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { TranslationPipe } from 'ngiw-core-utils';
-import {Observable} from 'rxjs'
+//import { TranslationPipe } from 'ngiw-core-utils';
+import {Observable} from 'rxjs';
 
 
 interface ISearch {
@@ -23,7 +23,7 @@ export class FilterSorterComponent implements OnInit {
   section: 'filter' | 'sort' | 'none' = 'none';
 
 
-  constructor(private translate:TranslationPipe) { }
+  constructor(/*private translate:TranslationPipe*/) { }
 
   translatePrefix = 'table.header-cell.filter-sorter.';
   tmpSearchList: any;

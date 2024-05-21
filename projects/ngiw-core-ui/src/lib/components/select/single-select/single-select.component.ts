@@ -8,7 +8,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class SingleSelectComponent {
   @Input() ngiwValue: any = '';
   @Input() ngiwPlaceholder: string = '';
-  @Input() ngiwOptions: { value: any, label: string }[] = [];
+  @Input() ngiwOptions: any[] = [];
   @Input() ngiwTransform: {value: any, label: any} = {} as any;
 
   @Output() valueChanged = new EventEmitter();

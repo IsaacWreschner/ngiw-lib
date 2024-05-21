@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { FilterSorterComponent } from './components/table-ui-utils/filter-sorter/filter-sorter/filter-sorter.component';
-import { NgiwCoreUtilsModule } from 'ngiw-core-utils';
+import { NgiwCoreUtilsModule } from 'dist/ngiw-core-utils';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -32,7 +32,7 @@ import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 
 
-import { TranslationPipe } from 'ngiw-core-utils';
+import { TranslationPipe } from 'dist/ngiw-core-utils';
 import { HeaderCellComponent } from './components/table/header/header-cell/header-cell.component';
 import { SingleSelectComponent } from './components/select/single-select/single-select.component';
 import { TableComponent } from './components/table/table.component';

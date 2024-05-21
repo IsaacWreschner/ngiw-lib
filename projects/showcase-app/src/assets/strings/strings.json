@@ -1,0 +1,11 @@
+{
+    "table": {
+            "header-cell":{
+                "filter-sorter": {
+                   "search": "חפש",
+                   "chooseAtLeastOne": "יש לבחור לפחות שדה אחד",
+                   "searchFromList": "חפש מתוך הרשימה"
+                }
+            }         
+    }
+}
