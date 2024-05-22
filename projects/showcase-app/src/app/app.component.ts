@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { filterData } from 'projects/ngiw-core-utils/src/lib/utils/filter';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +15,7 @@ export class AppComponent {
   ]; 
 
   ngOnInit() {
-    
+
   }
 
   onValueChanged(value: any) { 

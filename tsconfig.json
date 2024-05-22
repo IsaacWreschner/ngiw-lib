@@ -4,11 +4,14 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "ngiw-core-ui": [
-        "dist/ngiw-core-ui"
+      "ngiw-common": [
+        "projects/ngiw-common"
       ],
-      "ngiw-core-utils": [
-        "dist/ngiw-core-utils"
+      "ngiw-common/core-utils": [
+        "projects/ngiw-common/core-utils"
+      ],
+      "ngiw-common/core-ui": [
+        "projects/ngiw-common/core-ui"
       ]
     },
     "outDir": "./dist/out-tsc",

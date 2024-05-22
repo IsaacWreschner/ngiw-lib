@@ -24,8 +24,8 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NZ_I18N } from 'ng-zorro-antd/i18n';
 import { he_IL } from 'ng-zorro-antd/i18n';
 
-import { NgiwCoreUiModule } from 'dist/ngiw-core-ui';  
-import { NgiwCoreUtilsModule} from 'dist/ngiw-core-utils';
+import { NgiwCoreUiModule } from 'ngiw-common/core-ui';  
+import { NgiwCoreUtilsModule} from 'ngiw-common/core-utils';
 
 
 @NgModule({ 

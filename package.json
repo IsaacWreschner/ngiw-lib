@@ -3,10 +3,10 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start-showcase-app": "concurrently \"npm:watch-core-utils\" \"npm:watch-core-ui\" \"ng serve --configuration development\"",
-    "build": "ng build ngiw-core-utils && ng build ngiw-core-ui",
-    "watch-core-utils": "ng build ngiw-core-utils --watch --configuration development",
-    "watch-core-ui": "ng build ngiw-core-ui --watch --configuration development",
+    "dev": "concurrently \"npm:watch-lib\" \"npm:watch-showcase-app\"", 
+    "prod": "ng build ngiw-common && ng build showcase-app",
+    "watch-lib": "ng build ngiw-common --watch --configuration development",
+    "watch-showcase-app": "ng serve --configuration development", 
     "test": "ng test"
   },
   "private": true,

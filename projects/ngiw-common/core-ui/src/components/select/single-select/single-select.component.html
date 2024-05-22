@@ -1,0 +1,12 @@
+<nz-select 
+   nzShowSearch 
+   nzAllowClear 
+   [(ngModel)] = "ngiwValue"
+   (ngModelChange)="onValueChanges($event)"
+   [nzPlaceHolder]="ngiwPlaceholder" 
+>
+ <nz-option *ngFor="let option of ngiwOptions" 
+          [nzLabel]="getLabel(option)"  
+          [nzValue]="getValue(option)"
+         ></nz-option>
+</nz-select>
