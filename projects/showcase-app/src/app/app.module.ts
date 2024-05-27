@@ -26,11 +26,14 @@ import { he_IL } from 'ng-zorro-antd/i18n';
 
 import { NgiwCoreUiModule } from 'ngiw-common/core-ui';  
 import { NgiwCoreUtilsModule} from 'ngiw-common/core-utils';
+import { FormsComponent } from './components/forms/forms.component';
+import { NgiwCdkModule } from 'ngiw-common/cdk';
 
 
 @NgModule({ 
   declarations: [
-    AppComponent
+    AppComponent,
+    FormsComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +55,8 @@ import { NgiwCoreUtilsModule} from 'ngiw-common/core-utils';
     NzImageModule,
     NzCheckboxModule,
     NzDropDownModule,
-    NzModalModule 
+    NzModalModule,
+    NgiwCdkModule
   ],
   providers: [
     { provide: NZ_I18N, useValue: he_IL } 

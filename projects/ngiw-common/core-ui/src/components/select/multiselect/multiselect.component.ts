@@ -74,7 +74,7 @@ export class MultiSelectComponent {
 
   setChildToParent = () => {
     this.ngiwOptions?.forEach((parent:Node) => {
-      if (this.isParentSelectable && (parent.children as any)[0].label !== 'בחר הכל') {
+      if (this.isParentSelectable && (parent.children as any) && (parent.children as any)[0].label !== 'בחר הכל') {
         parent.children?.unshift(
           {
             label:'בחר הכל', 
@@ -93,14 +93,16 @@ export class MultiSelectComponent {
     console.log(this.ngiwValue)
     this.valueChanged.emit(values[1]);
   }
-}
 
-/**
- *  setModelFromId = () => {
+  /*setModelFromId = () => {
     let val =  this.ngiwValue
     if (typeof this.ngiwValue === 'object') {
           val = this.ngiwValue[0];
     }
-    this.values = [this.childToParent[val], JSON.stringify(this.ngiwValue)];
-  }
- */
+    this.ngiwValue = [this.childToParent[val], JSON.stringify(this.ngiwValue)];
+  }*/
+}
+
+
+  
+

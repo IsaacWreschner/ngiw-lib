@@ -1,0 +1,43 @@
+<div class = "component-wrapper">
+    <div class="form-wrapper">
+      <section>
+        <h2>Form Inline</h2>
+        <div>
+            <ngiw-form-cdk
+            [model]="formModel1"
+           >
+         </ngiw-form-cdk>
+        </div>
+      </section>
+      <section>
+        <h2>Form Modal</h2>
+        <div>
+            <button nz-button nzType="primary" (click)="openForm(form1)">Open Modal</button>
+        </div>
+        <ng-template #form1>
+            <div>
+                <ngiw-form-cdk
+                [model]="formModel1"
+               >
+             </ngiw-form-cdk>
+            </div>          
+        </ng-template>
+      </section>  
+      <section>
+        <h2>Form submitted value</h2>
+        <div class = "form-results">
+            <div>
+                <h4>Form results</h4>
+            </div>          
+            <div >
+                {{formSubmittedValue}}
+            </div>
+        </div>
+      </section>   
+    </div>
+   
+
+   
+    
+</div>
+

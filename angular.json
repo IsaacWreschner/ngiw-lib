@@ -37,7 +37,6 @@
             "styles": [
               "projects/showcase-app/src/styles.scss",
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
-
             ],
             "scripts": []
           },
@@ -116,7 +115,6 @@
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-        
             "project": "projects/ngiw-common/ng-package.json"
           },
           "configurations": {
@@ -124,7 +122,6 @@
               "tsConfig": "projects/ngiw-common/tsconfig.lib.prod.json"
             },
             "development": {
-          
               "tsConfig": "projects/ngiw-common/tsconfig.lib.json"
             }
           },
@@ -137,6 +134,44 @@
             "polyfills": [
               "zone.js",
               "zone.js/testing"
+            ]
+          }
+        },
+        "storybook": {
+          "builder": "@storybook/angular:start-storybook",
+          "options": {
+            "configDir": "projects/ngiw-common/.storybook",
+            "browserTarget": "ngiw-common:build",
+            "compodoc": true,
+            "compodocArgs": [
+              "-e",
+              "json",
+              "-d",
+              "projects/ngiw-common"
+            ],
+            "port": 6006,
+            "styles": [
+              "projects/showcase-app/src/styles.scss",
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
+            ]
+          }
+        },
+        "build-storybook": {
+          "builder": "@storybook/angular:build-storybook",
+          "options": {
+            "configDir": "projects/ngiw-common/.storybook",
+            "browserTarget": "ngiw-common:build",
+            "compodoc": true,
+            "compodocArgs": [
+              "-e",
+              "json",
+              "-d",
+              "projects/ngiw-common"
+            ],
+            "outputDir": "dist/storybook/ngiw-common",
+            "styles": [
+              "projects/showcase-app/src/styles.scss",
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
             ]
           }
         }

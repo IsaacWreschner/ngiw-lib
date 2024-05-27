@@ -3,10 +3,11 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "dev": "concurrently \"npm:watch-lib\" \"npm:watch-showcase-app\"", 
+    "dev": "concurrently \"npm:watch-lib\" \"npm:watch-showcase-app\" \"npm:storybook\"",
     "prod": "ng build ngiw-common && ng build showcase-app",
     "watch-lib": "ng build ngiw-common --watch --configuration development",
-    "watch-showcase-app": "ng serve --configuration development", 
+    "watch-showcase-app": "ng serve --configuration development",
+    "storybook": "ng run ngiw-common:storybook",
     "test": "ng test"
   },
   "private": true,
@@ -31,6 +32,15 @@
     "@angular-devkit/build-angular": "^16.1.6",
     "@angular/cli": "~16.1.0",
     "@angular/compiler-cli": "^16.1.0",
+    "@chromatic-com/storybook": "^1.4.0",
+    "@compodoc/compodoc": "^1.1.24",
+    "@storybook/addon-docs": "^8.1.3",
+    "@storybook/addon-essentials": "^8.1.3",
+    "@storybook/addon-interactions": "^8.1.3",
+    "@storybook/addon-links": "^8.1.3",
+    "@storybook/angular": "^8.1.3",
+    "@storybook/blocks": "^8.1.3",
+    "@storybook/test": "^8.1.3",
     "@types/jasmine": "~4.3.0",
     "jasmine-core": "~4.6.0",
     "karma": "~6.4.0",
@@ -39,6 +49,7 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "ng-packagr": "^16.0.0",
+    "storybook": "^8.1.3",
     "typescript": "~5.1.3"
   }
 }

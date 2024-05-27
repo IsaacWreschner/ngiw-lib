@@ -1,0 +1,180 @@
+{
+    "pipes": [],
+    "interfaces": [],
+    "injectables": [],
+    "guards": [],
+    "interceptors": [],
+    "classes": [],
+    "directives": [],
+    "components": [],
+    "modules": [],
+    "miscellaneous": {
+        "variables": [
+            {
+                "name": "Basic",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/ngiw-common/core-ui/src/stories/multiselect.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n  args: {\n    ngiwValue: null,\n    ngiwOptions: [\n      { value: 1, label: 'Option 1' },\n      { value: 2, label: 'Option 2' },\n      { value: 3, label: 'Option 3' , children: [\n        { value: 4, label: 'Option 4' },\n        { value: 5, label: 'Option 5' },\n        { value: 6, label: 'Option 6' , children: [\n          { value: 7, label: 'Option 7' },\n          { value: 8, label: 'Option 8' },\n          { value: 9, label: 'Option 9' },\n        ]},\n        { value: 10, label: 'Option 10' },\n        { value: 11, label: 'Option 11'},\n      ]},      \n    ],\n    ngiwPlaceholder: 'Select an option'\n  }\n}"
+            },
+            {
+                "name": "html",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/ngiw-common/core-ui/src/stories/multiselect.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "",
+                "defaultValue": "`<div class = \"tree-select\" [style.width] = \"width ?? 200\">\n<nz-cascader [(ngModel)]=\"ngiwValue\" \n            [nzOptions]=\"ngiwOptions\" \n            [nzPlaceHolder]=\"ngiwPlaceholder\"\n            (ngModelChange)=\"onValueChanges($event)\">\n</nz-cascader>\n</div>\n`"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/ngiw-common/core-ui/src/stories/multiselect.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<MultiSelectComponent>",
+                "defaultValue": "{\n  title: 'Example/multi select',\n  component: MultiSelectComponent,\n  decorators: [\n    moduleMetadata({\n      declarations: [MultiSelectComponent],\n      imports: [\n        NzCascaderModule\n      ],\n    }),\n  ],\n}"
+            },
+            {
+                "name": "preview",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "projects/ngiw-common/.storybook/preview.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Preview",
+                "defaultValue": "{\n  parameters: {\n    controls: {\n      matchers: {\n        color: /(background|color)$/i,\n        date: /Date$/i,\n      },\n    },\n  },\n}"
+            }
+        ],
+        "functions": [],
+        "typealiases": [
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<MultiSelectComponent>",
+                "file": "projects/ngiw-common/core-ui/src/stories/multiselect.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 183
+            }
+        ],
+        "enumerations": [],
+        "groupedVariables": {
+            "projects/ngiw-common/core-ui/src/stories/multiselect.stories.ts": [
+                {
+                    "name": "Basic",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ngiw-common/core-ui/src/stories/multiselect.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Story",
+                    "defaultValue": "{\n  args: {\n    ngiwValue: null,\n    ngiwOptions: [\n      { value: 1, label: 'Option 1' },\n      { value: 2, label: 'Option 2' },\n      { value: 3, label: 'Option 3' , children: [\n        { value: 4, label: 'Option 4' },\n        { value: 5, label: 'Option 5' },\n        { value: 6, label: 'Option 6' , children: [\n          { value: 7, label: 'Option 7' },\n          { value: 8, label: 'Option 8' },\n          { value: 9, label: 'Option 9' },\n        ]},\n        { value: 10, label: 'Option 10' },\n        { value: 11, label: 'Option 11'},\n      ]},      \n    ],\n    ngiwPlaceholder: 'Select an option'\n  }\n}"
+                },
+                {
+                    "name": "html",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ngiw-common/core-ui/src/stories/multiselect.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "",
+                    "defaultValue": "`<div class = \"tree-select\" [style.width] = \"width ?? 200\">\n<nz-cascader [(ngModel)]=\"ngiwValue\" \n            [nzOptions]=\"ngiwOptions\" \n            [nzPlaceHolder]=\"ngiwPlaceholder\"\n            (ngModelChange)=\"onValueChanges($event)\">\n</nz-cascader>\n</div>\n`"
+                },
+                {
+                    "name": "meta",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ngiw-common/core-ui/src/stories/multiselect.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Meta<MultiSelectComponent>",
+                    "defaultValue": "{\n  title: 'Example/multi select',\n  component: MultiSelectComponent,\n  decorators: [\n    moduleMetadata({\n      declarations: [MultiSelectComponent],\n      imports: [\n        NzCascaderModule\n      ],\n    }),\n  ],\n}"
+                }
+            ],
+            "projects/ngiw-common/.storybook/preview.ts": [
+                {
+                    "name": "preview",
+                    "ctype": "miscellaneous",
+                    "subtype": "variable",
+                    "file": "projects/ngiw-common/.storybook/preview.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "Preview",
+                    "defaultValue": "{\n  parameters: {\n    controls: {\n      matchers: {\n        color: /(background|color)$/i,\n        date: /Date$/i,\n      },\n    },\n  },\n}"
+                }
+            ]
+        },
+        "groupedFunctions": {},
+        "groupedEnumerations": {},
+        "groupedTypeAliases": {
+            "projects/ngiw-common/core-ui/src/stories/multiselect.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<MultiSelectComponent>",
+                    "file": "projects/ngiw-common/core-ui/src/stories/multiselect.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 183
+                }
+            ]
+        }
+    },
+    "routes": [],
+    "coverage": {
+        "count": 0,
+        "status": "low",
+        "files": [
+            {
+                "filePath": "projects/ngiw-common/.storybook/preview.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "preview",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ngiw-common/core-ui/src/stories/multiselect.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "Basic",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ngiw-common/core-ui/src/stories/multiselect.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "html",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "projects/ngiw-common/core-ui/src/stories/multiselect.stories.ts",
+                "type": "variable",
+                "linktype": "miscellaneous",
+                "linksubtype": "variable",
+                "name": "meta",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            }
+        ]
+    }
+}

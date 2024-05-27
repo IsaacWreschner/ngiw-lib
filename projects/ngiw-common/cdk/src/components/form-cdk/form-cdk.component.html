@@ -1,0 +1,74 @@
+<div  class = "form-renderer-wrapper">
+    <form  *ngIf = "model?.inputs && form" nz-form [formGroup]="form" (ngSubmit)="submitForm()">
+        <div *ngFor = "let input of model?.inputs">
+            <div *ngIf = "input.type === 'input'">
+                <nz-form-item>
+                    <nz-form-label [nzRequired]="input.required"> 
+                        {{input.label}}
+                    </nz-form-label>
+                    <nz-form-control           
+                     [nzErrorTip]="getErrorTip(input)">
+                        <input 
+                        nz-input  
+                        [formControlName]="input.id" 
+                        [placeholder] ="input.label" 
+                        autofocus
+                        >
+                    </nz-form-control>
+                </nz-form-item>
+            </div>
+            <div *ngIf = "input.type === 'select'">
+                <nz-form-item>
+                    <nz-form-label [nzRequired]="input.required"> 
+                        {{input.label}}
+                    </nz-form-label>
+                    <nz-form-control            
+                     [nzErrorTip]="getErrorTip(input)">
+                        <nz-select 
+                        nzShowSearch 
+                        nzAllowClear 
+                        [formControlName]="input.id" 
+                        [nzPlaceHolder]="input.label" 
+                        >
+                          <nz-option *ngFor="let option of sources[input.id]" 
+                                    [nzLabel]="option.label" 
+                                    [nzValue]="option.id"
+                                >
+                           </nz-option>
+                        </nz-select>
+                  </nz-form-control>
+                </nz-form-item>
+            </div>   
+            <div *ngIf = "input.type === 'upload'">
+                <!--<nz-form-item>
+                    <nz-form-label [nzRequired]="input.required"> 
+                        {{input.label}}
+                    </nz-form-label>
+                    <ngiw-file-upload 
+                             (ngiwFilesChanged) = "onFilesStateChanged($event, input)"
+                             [ngiwUploadPath] = "input.action"
+                             [ngiwFiles] = "files[input.id]"
+                             >
+                    </ngiw-file-upload>
+                </nz-form-item>-->
+            </div>                
+        </div>
+
+        <div *ngIf = "model?.submit === 'button'">
+            <div>
+                <nz-form-item>
+                    <nz-form-control>
+                      <button 
+                          nz-button 
+                          nzType="primary" 
+                          [disabled]="!form?.valid"> 
+                             <!--{{model?.submitText ?? 'המשך'}}--> Continue
+                       </button>
+                    </nz-form-control>
+                  </nz-form-item>
+            </div>         
+        </div>
+    </form>
+</div>
+
+

@@ -12,6 +12,12 @@
       ],
       "ngiw-common/core-ui": [
         "projects/ngiw-common/core-ui"
+      ],
+      "ngiw-common/cdk": [
+        "projects/ngiw-common/cdk"
+      ],
+      "ngiw-common/domain-utils": [
+        "projects/ngiw-common/domain-utils"
       ]
     },
     "outDir": "./dist/out-tsc",
