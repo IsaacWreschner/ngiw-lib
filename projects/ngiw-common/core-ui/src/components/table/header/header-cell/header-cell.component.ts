@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @angular-eslint/no-output-on-prefix */
 import { Component, Input, OnInit, Output, EventEmitter, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 @Component({
@@ -6,24 +8,22 @@ import { BehaviorSubject } from 'rxjs';
   styleUrls: ['./header-cell.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class HeaderCellComponent implements OnInit {
+export class HeaderCellComponent {
   @Input() showFilterSorter = false;
-  @Input() headerLabel: string = '';
+  @Input() headerLabel = '';
   @Input() searchList: any[] = undefined as any;
   @Input() createSearchListFn: () => any[] = undefined as any;
 
   @Output() onFilter = new EventEmitter();
   @Output() onUndoFilter = new EventEmitter()
 
-  locker: boolean = false;
-  showPopover: boolean = false;
+  locker = false;
+  showPopover = false;
   currentSearchList: BehaviorSubject<any> = new BehaviorSubject([]);
   currentFilter = [];
-  isCreatingList: boolean = false;
+  isCreatingList = false;
   constructor(private ref: ChangeDetectorRef) { }
 
-  ngOnInit(): void {
-  }
 
   public columnHasFilter() {
     return this.currentFilter.length > 0;

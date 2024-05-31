@@ -9,9 +9,6 @@ export class TextPrettifyComponent {
   @Input() ngiwText = '';
   @Input() ngiwHightlightPattern = ''; 
   @Input() ngiwHightlighColor = '';
-  constructor() { }
 
-  ngOnInit(): void { 
-  }
 }
  

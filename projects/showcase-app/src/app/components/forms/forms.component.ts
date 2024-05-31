@@ -1,9 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, TemplateRef } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { FormCdkComponent } from 'ngiw-common/cdk';
-import { FormCdkModel } from 'projects/ngiw-common/cdk/src/models/form-cdk.model';
-import { Observable } from 'rxjs';
+import { FormCdkModel } from 'ngiw-common/cdk';
 
 const CONSTS = {
   ID_TYPES: [
@@ -69,11 +68,8 @@ export class FormsComponent {
     };
   }
 
-  ngOnInit() {
 
-  }
-
-  openForm = (tplContent: TemplateRef<{}>) => {
+  openForm = (tplContent: TemplateRef<any>) => {
     this.modalRef = this.nzModalService.create({
       nzStyle: { direction: 'rtl' },
       nzContent: tplContent
@@ -92,7 +88,7 @@ export class FormsComponent {
   }
 
   israelIdValidator(value: any): boolean {
-    let strId = String(value).trim();
+    const strId = String(value).trim();
 
     if (strId.length !== 9) {
       return false;

@@ -22,7 +22,7 @@ export interface FormCdkModel<Form> extends BaseCdkModel {
         $formSubmitted: (event: { form: Form }) => void;
     };
     inputs: FormCdkInputModel<Form>[];
-    };
+    }
 
 /**
  * @param id - the id of the input

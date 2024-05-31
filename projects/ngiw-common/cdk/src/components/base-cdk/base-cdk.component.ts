@@ -2,14 +2,14 @@ import { Component, Input } from '@angular/core';
 import { BaseCdkModel } from '../../models/base-cdk.model';
 
 @Component({
-  selector: 'lib-base-cdk',
+  selector: 'ngiw-base-cdk',
   templateUrl: './base-cdk.component.html',
   styleUrls: ['./base-cdk.component.css']
 })
 export class BaseCdkComponent {
   @Input() model:BaseCdkModel = {} as BaseCdkModel;
 
-   ngOnInit() {
+   OnInit() {
     console.log('BaseCdkComponent initialized');
    }
 

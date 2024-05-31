@@ -12,8 +12,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 const meta: Meta<MultiSelectComponent> = {
   title: 'Example/Multi select',
   component: MultiSelectComponent,
-  args: {
-    valueChanged: (event) => action('valueChanged')(),
+  argTypes: {
+    valueChanged: { action: 'valueChanged' }
   },
   decorators: [
     moduleMetadata({
@@ -30,50 +30,48 @@ const meta: Meta<MultiSelectComponent> = {
   ],
   
 }
- 
+
+
 
 export default meta;
 type Story = StoryObj<MultiSelectComponent>;
 
-export const Basic: Story = {
-  args: {
-    ngiwValue: 5,
-    ngiwOptions: [
-      { value: 1, label: 'Option 1' },
-      { value: 2, label: 'Option 2' },
-      { value: 3, label: 'Option 3' , children: [
-        { value: 4, label: 'Option 4' },
-        { value: 5, label: 'Option 5' },
-        { value: 6, label: 'Option 6'},
-        { value: 10, label: 'Option 10' },
-        { value: 11, label: 'Option 11'},
-      ]},      
-    ],
-    ngiwPlaceholder: 'Select an option',
-    ngiwTransform: {}
-    
-  },
-  
+const ngiwOptions = [
+  { value: 1, label: 'Option 1' },
+  { value: 2, label: 'Option 2' },
+  { value: 3, label: 'Option 3' , children: [
+    { value: 4, label: 'Option 4' },
+    { value: 5, label: 'Option 5' },
+    { value: 6, label: 'Option 6'},
+    { value: 10, label: 'Option 10' },
+    { value: 11, label: 'Option 11'},
+  ]},      
+];
+
+
+const args = {
+  ngiwValue: undefined,
+  ngiwOptions: ngiwOptions,
+  ngiwPlaceholder: 'Select an option',
+  ngiwTransform: undefined,
+  ngiwWidth: undefined,
+  ngiwIsParentSelectable: undefined 
 };
 
-export const Transformed: Story = {
+
+ 
+
+
+export const Basic: Story = {
   args: {
-    ngiwValue: [3,5],
-    ngiwOptions: [
-      { value: 1, label: 'Option 1' },
-      { value: 2, label: 'Option 2' },
-      { value: 3, label: 'Option 3' , children: [
-        { value: 4, label: 'Option 4' },
-        { value: 5, label: 'Option 5' },
-        { value: 6, label: 'Option 6'},
-        { value: 10, label: 'Option 10' },
-        { value: 11, label: 'Option 11'},
-      ]},      
-    ],
-    ngiwPlaceholder: 'Select an option',
-    ngiwTransform: {}
-    
-  },
-  
+   ...args,
+  },  
+};
+
+export const WithInitialValue: Story = {
+  args: {
+    ...args,
+    ngiwValue: 6
+  }
 };
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args

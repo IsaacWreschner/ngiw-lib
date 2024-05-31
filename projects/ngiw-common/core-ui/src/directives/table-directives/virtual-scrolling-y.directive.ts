@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { Directive, ElementRef, EventEmitter, Input, Output } from '@angular/core';
 
@@ -18,7 +19,7 @@ export class VirtualScrollingYDirective {
   YRange!: number[];
   virtualContainers!: [number, number];
   scrollTop = 0;
-  lastPosition: number = 0;
+  lastPosition = 0;
   timeout!: any;
   @Input() ngiwRecordsLength!: number;
   @Input() ngiwArrowsKeysObservable: any;
@@ -56,7 +57,7 @@ export class VirtualScrollingYDirective {
     }, 50)
   }
 
-  ngOnChanges(e: any) {
+  OnChanges(e: any) {
     this._vsManager();
   }
 
@@ -78,9 +79,9 @@ export class VirtualScrollingYDirective {
   private _vsManager() {
     if (!this._getHeadAndRowsHeight()) return;
 
-    let scrollBarHeight = this._calculateScrollBarHeight();
-    let amountOfRowsToDispatch = this._getAmountOfRowsToDispatch(); //get rows to dispatch info
-    let rowsDispatchedHeight = amountOfRowsToDispatch * this.rowHeight;
+    const scrollBarHeight = this._calculateScrollBarHeight();
+    const amountOfRowsToDispatch = this._getAmountOfRowsToDispatch(); //get rows to dispatch info
+    const rowsDispatchedHeight = amountOfRowsToDispatch * this.rowHeight;
     let currScrollPosition = this.elem.nativeElement.scrollTop;
 
     currScrollPosition = this._preventScrollPositionOverload(currScrollPosition,
@@ -111,10 +112,10 @@ export class VirtualScrollingYDirective {
 
 
   private _setVirtualContainers(currScrollPosition: number, scrollBarHeight: number, rowsDispatchedHeight: number) {
-    let beforeCtnHeight = currScrollPosition // Math.floor(currScrollPosition/this.rowHeight) * this.rowHeight; // to make virtual scrolling look great !!
-    let afterCtnHeight = scrollBarHeight - (currScrollPosition + rowsDispatchedHeight);
-    let virtualContainerBefore = this.elem.nativeElement.querySelector('#virtual-container-before');
-    let virtualContainerAfter = this.elem.nativeElement.querySelector('#virtual-container-after');
+    const beforeCtnHeight = currScrollPosition // Math.floor(currScrollPosition/this.rowHeight) * this.rowHeight; // to make virtual scrolling look great !!
+    const afterCtnHeight = scrollBarHeight - (currScrollPosition + rowsDispatchedHeight);
+    const virtualContainerBefore = this.elem.nativeElement.querySelector('#virtual-container-before');
+    const virtualContainerAfter = this.elem.nativeElement.querySelector('#virtual-container-after');
     virtualContainerAfter.style.height = `${afterCtnHeight}px`;
     virtualContainerBefore.style.height = `${beforeCtnHeight}px`;
     this.virtualContainers = [beforeCtnHeight, afterCtnHeight];
@@ -138,11 +139,11 @@ export class VirtualScrollingYDirective {
   }
 
   private _onKeyDown(indexRow: number, indexColumn: number) {
-    let height = this._tblWrapperHeight();
-    let tblTop = this._tblWrapperTop();
+    const height = this._tblWrapperHeight();
+    const tblTop = this._tblWrapperTop();
     let trTop;
-    let trIndex = indexRow - this.YRange[0];
-    let nthRow = this._nthRow(trIndex + 2);
+    const trIndex = indexRow - this.YRange[0];
+    const nthRow = this._nthRow(trIndex + 2);
     if (nthRow) {
       trTop = nthRow.getBoundingClientRect().y - tblTop;
       if (nthRow.children[indexColumn]) {
@@ -157,9 +158,9 @@ export class VirtualScrollingYDirective {
 
   private _onKeyUp(indexRow: number, indexColumn: number) {
     let trTop;
-    let tblTop = this._tblWrapperTop();
-    let trIndex = indexRow - this.YRange[0];
-    let nthRow = this._nthRow(trIndex + 2);
+    const tblTop = this._tblWrapperTop();
+    const trIndex = indexRow - this.YRange[0];
+    const nthRow = this._nthRow(trIndex + 2);
     if (nthRow) {
       trTop = nthRow.getBoundingClientRect().y - tblTop;
       // focus
@@ -190,8 +191,8 @@ export class VirtualScrollingYDirective {
   }
 
   private _scroll(inc: number) {
-    let x = this._tblWrapper().scrollLeft;
-    let y = this._tblWrapper().scrollTop;
+    const x = this._tblWrapper().scrollLeft;
+    const y = this._tblWrapper().scrollTop;
     this._tblWrapper().scrollTo(x, y + inc);
   }
 }

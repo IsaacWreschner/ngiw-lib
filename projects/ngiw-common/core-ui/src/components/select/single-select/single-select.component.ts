@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({  
@@ -7,21 +8,13 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })  
 export class SingleSelectComponent {        
   @Input() ngiwValue: any = ''; 
-  @Input() ngiwPlaceholder: string = '';    
+  @Input() ngiwPlaceholder = '';    
   @Input() ngiwOptions: any[] = [];
   @Input() ngiwTransform: {value: any, label: any} = {} as any;
   
   @Output() valueChanged = new EventEmitter();
   selectedValue = null;   
    
-  constructor() { } 
-
-  ngOnInit(): void { 
-  }
-
-  ngOnDestroy() {
-  }
-
   onValueChanges(value:any): void { 
     //console.log(value);
     this.valueChanged.emit(value);

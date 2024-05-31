@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 //import { TranslationPipe } from 'ngiw-core-utils';
 import {Observable} from 'rxjs';
@@ -15,7 +16,7 @@ interface ISearch {
 })
 export class FilterSorterComponent implements OnInit {
   @Input() ngiwListSortBy: ISearch[] = [];
-  @Input() ngiwIsCreatingList: boolean = false;
+  @Input() ngiwIsCreatingList = false;
   @Input() $ngiwSearchList!: Observable<ISearch[]>;
   @Output() ngiwSorted = new EventEmitter();
   @Output() ngiwFilter = new EventEmitter();
@@ -23,12 +24,12 @@ export class FilterSorterComponent implements OnInit {
   section: 'filter' | 'sort' | 'none' = 'none';
 
 
-  constructor(/*private translate:TranslationPipe*/) { }
+  //constructor(/*private translate:TranslationPipe*/) { }
 
   translatePrefix = 'table.header-cell.filter-sorter.';
   tmpSearchList: any;
   fullSearchList: any;
-  isFilterError: boolean = false;
+  isFilterError = false;
 
   mode: "asc" | "desc" | "none" = "none";
   tmpSortList: any[] = [];
@@ -48,7 +49,7 @@ export class FilterSorterComponent implements OnInit {
   onSectionFilter() {
     this.section = 'filter';
     setTimeout(() => {
-      let elem = document.getElementById('input-filter');
+      const elem = document.getElementById('input-filter');
       if (elem) {
         elem.focus()
       }
@@ -61,7 +62,7 @@ export class FilterSorterComponent implements OnInit {
   }
 
   onFilter() {
-    let checked = this.tmpSearchList.filter((s: any) => s.checked);
+    const checked = this.tmpSearchList.filter((s: any) => s.checked);
     if (!checked || checked.length === 0) {
       this.isFilterError = true;
       return;

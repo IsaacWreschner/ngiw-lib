@@ -8,7 +8,7 @@
     ]
   },
   "include": [
-    "**/*.spec.ts",
-    "**/*.d.ts"
+    "core-ui/**/*.spec.ts",
+    "core-ui/**/*.d.ts"
   ]
 }

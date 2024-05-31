@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { Directive, ElementRef, EventEmitter, HostBinding, HostListener, Input, Output } from '@angular/core';
 
@@ -22,8 +23,7 @@ export class VirtualScrollingXDirective {
   @Input()ngiwFirstColumnFixed!:any;
   @Output()ngiwGetXRange = new EventEmitter();
   @Output()ngiwGetVirtualContainersWidths = new EventEmitter();
-  @HostListener('scroll',['$event'])scroll = (e:any)=>{
-  };
+  @HostListener('scroll',['$event'])scroll = (e:any) => { console.log('scrolling');};
   
  
   constructor(private elem:ElementRef) {
@@ -45,7 +45,7 @@ export class VirtualScrollingXDirective {
    }
   
   private _getHeadAndRowsHeight():boolean{
-    let th = document.getElementById('ngiwThForVS')
+    const th = document.getElementById('ngiwThForVS')
      this.columnWidth = 100;
     return true
   } 
@@ -54,9 +54,9 @@ export class VirtualScrollingXDirective {
     if(!this._getHeadAndRowsHeight()) {
       return;
     }
-    let scrollBarWidths = this._calculateScrollBarWidths();
-    let amountOfColumnsToDispatch = this._getAmountOfColumnsToDispatch(); //get rows to dispatch info
-    let columnsDispatchedWidth =  amountOfColumnsToDispatch * this.columnWidth;
+    const scrollBarWidths = this._calculateScrollBarWidths();
+    const amountOfColumnsToDispatch = this._getAmountOfColumnsToDispatch(); //get rows to dispatch info
+    const columnsDispatchedWidth =  amountOfColumnsToDispatch * this.columnWidth;
     let currScrollPosition =  -this._tblWrapper().scrollLeft;
     currScrollPosition = this._preventScrollPositionOverload(currScrollPosition,
          scrollBarWidths,columnsDispatchedWidth);  /*prevent curr scroll position to overload */
@@ -81,7 +81,7 @@ export class VirtualScrollingXDirective {
   }
 
   private _setVirtualContainers(currScrollPosition: number, scrollBarWidth: number, columnsDispatchedWidth: number) {
-    let beforeCtnWidth = currScrollPosition;
+    const beforeCtnWidth = currScrollPosition;
     let afterCtnWidth = scrollBarWidth - (currScrollPosition + columnsDispatchedWidth);
     if (afterCtnWidth < 0) afterCtnWidth = 0;
     this.virtualContainers = [beforeCtnWidth, afterCtnWidth];
@@ -107,11 +107,11 @@ export class VirtualScrollingXDirective {
    }
  
    private _onKeyLeft(indexRow:number,indexColumn:number){
-    let width = this._tblWrapperWidth();
-    let tblLeft = this._tblWrapperLeft();
+    const width = this._tblWrapperWidth();
+    const tblLeft = this._tblWrapperLeft();
     let tdLeft;
-    let tdIndex = indexColumn  - this.XRange[0];
-    let td = this._nthRow(indexRow + 2)?.children[tdIndex];
+    const tdIndex = indexColumn  - this.XRange[0];
+    const td = this._nthRow(indexRow + 2)?.children[tdIndex];
     if(td){
        tdLeft = td.getBoundingClientRect().x - tblLeft;
        td.focus();
@@ -123,12 +123,12 @@ export class VirtualScrollingXDirective {
    }
  
    private _onKeyRight(indexRow:number,indexColumn:number) { 
-    let tblLeft = this._tblWrapperLeft();
+    const tblLeft = this._tblWrapperLeft();
     let tdLeft;
-    let tdIndex = indexColumn  - this.XRange[0];
-    let td = this._nthRow(indexRow + 2)?.children[tdIndex];
-    let fixedTd:HTMLTableCellElement = this._nthRow(indexRow + 2)?.children[0];
-    let width = this._tblWrapperWidth() - fixedTd?.clientWidth;
+    const tdIndex = indexColumn  - this.XRange[0];
+    const td = this._nthRow(indexRow + 2)?.children[tdIndex];
+    const fixedTd:HTMLTableCellElement = this._nthRow(indexRow + 2)?.children[0];
+    const width = this._tblWrapperWidth() - fixedTd?.clientWidth;
     if(td){
       tdLeft = td.getBoundingClientRect().x - tblLeft;
        td.focus();
@@ -139,13 +139,13 @@ export class VirtualScrollingXDirective {
    }
 
    private _scroll(inc:number){
-    let x = this._tblWrapper().scrollLeft;
-    let y = this._tblWrapper().scrollTop;
+    const x = this._tblWrapper().scrollLeft;
+    const y = this._tblWrapper().scrollTop;
     this.elem.nativeElement.scrollTo(x+inc,y);
    }
 
    private _scrollTo(to:number){
-    let y = this.elem.nativeElement.scrollTop;
+    const y = this.elem.nativeElement.scrollTop;
     this.elem.nativeElement.scrollTo(to,y);
    }
 

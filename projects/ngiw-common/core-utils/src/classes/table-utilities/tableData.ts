@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Subject } from "rxjs";
 import { _TableLayerService } from "./tableLayer";
 import { IUtils } from "./Iutils";
@@ -5,11 +6,11 @@ import { IUtils } from "./Iutils";
 const LAYER_NAME = 'tableDataUtil';
 
 export class TableDataUtil implements IUtils {
-    hasUid:boolean = false;
-    uid:string | Function | undefined;
+    hasUid = false;
+    uid:string | ((...args:any[]) => any ) | undefined;
     data:any = [];
     $data:Subject<any[]> = new Subject();
-    constructor(uid?:string | Function ) {
+    constructor(uid?:string | ((...args:any[]) => any )) {
         this.uid = uid;
         if (uid) {
             this.hasUid = true;

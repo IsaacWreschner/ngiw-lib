@@ -1,19 +1,23 @@
 <div>
- <!--
- <ngiw-select 
-    [ngiwValue]="selectedValue" 
-    [ngiwPlaceholder]="'Select an option'" 
-    [ngiwOptions]="options" 
-    [ngiwTransform]="{value: 'id', label: 'name'}" 
-    (valueChanged)="onValueChanged($event)">
-</ngiw-select>
- 
-  <div> 
-
-    <h3>Selected value</h3>
-
-    <p>{{ selectedValue || '' }}</p>
+  <div class = "tmp-component-wrapper">
+    <input [(ngModel)] = "placeholder">
+    <div class="tmp-form-wrapper">
+      <ngiw-multiselect 
+      [ngiwValue]="entryValue" 
+      [ngiwPlaceholder]="placeholder" 
+      [ngiwOptions]="options" 
+      (valueChanged)="onValueChanged($event)">
+  </ngiw-multiselect>
+    <!--[ngiwTransform]="{value: 'id', label: 'name'}" -->
+    <div> 
+  
+      <h3>Selected value</h3>
+  
+      <p>{{ selectedValue || '' }}</p>
+    </div>
   </div>
- -->
+</div>
+
+ 
  <router-outlet></router-outlet>
 </div>

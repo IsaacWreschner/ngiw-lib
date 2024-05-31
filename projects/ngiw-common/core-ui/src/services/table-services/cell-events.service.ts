@@ -13,7 +13,7 @@ export class CellEventsService {
       eventType: TEventType,
       eventObj: any
     }> = new EventEmitter()
-  constructor() { }
+
 
   fireEvent(row: number, col: number, eventType: TEventType, eventObj: any) {
     this.event.emit({ row: row, col: col, eventType: eventType, eventObj: eventObj })

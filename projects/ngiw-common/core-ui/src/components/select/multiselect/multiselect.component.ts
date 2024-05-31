@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 
@@ -13,17 +14,17 @@ type Node = {
   styleUrls: ['./multiselect.component.scss']
 })
 export class MultiSelectComponent {
-  @Input() width:number = 200;
+  @Input() ngiwWidth = 200;
 
   @Input() ngiwOptions!: Node[];
 
   @Input() ngiwPlaceholder!: string;
 
-  @Input() isParentSelectable:boolean = true;
+  @Input() ngiwIsParentSelectable = true;
 
-  @Input() ngiwValue:any | any[] = 12;
+  @Input() ngiwValue:any | any[] = null;
 
-  @Input() ngiwTransform: any = {
+  @Input() ngiwTransform: any = null /*{
        value: 'parentId',
        label: 'name',
        children: {
@@ -32,21 +33,19 @@ export class MultiSelectComponent {
           label: 'branch'
        },
        
-  }
+  }*/
   @Output() valueChanged = new EventEmitter();
 
   childToParent: { [key: number]: number } = {};
 
 
-
-  constructor() { }
-
-  ngOnInit(): void {
+  OnInit(): void {
+    console.log(this.ngiwOptions)
     this.transformOptions(this.ngiwOptions, this.ngiwTransform);
     this.setChildToParent();  
   }
 
-  ngOnChanges(e:any){
+  OnChanges(e:any){
     if (e.ngiwOptions) {
       this.transformOptions(e.ngiwOptions.currentValue, this.ngiwTransform);
       this.setChildToParent();
@@ -56,13 +55,13 @@ export class MultiSelectComponent {
   transformOptions = (options:any, transform:any) => {
     console.log(options)
     options?.forEach((parent:Node) => {
-      if (transform.label) {
+      if (transform?.label) {
         parent.label = (parent as any)[transform.label];
       }
-      if (transform.value) {
+      if (transform?.value) {
         parent.value = (parent as any)[transform.value];
       }
-      if (transform.children && transform.children.propInParent) {
+      if (transform?.children && transform?.children?.propInParent) {
         parent.children = (parent as any)[transform.children.propInParent];
         const childTransform = transform.children;
         if (parent.children) {
@@ -74,7 +73,7 @@ export class MultiSelectComponent {
 
   setChildToParent = () => {
     this.ngiwOptions?.forEach((parent:Node) => {
-      if (this.isParentSelectable && (parent.children as any) && (parent.children as any)[0].label !== 'בחר הכל') {
+      if (this.ngiwIsParentSelectable && (parent.children as any) && (parent.children as any)[0].label !== 'בחר הכל') {
         parent.children?.unshift(
           {
             label:'בחר הכל', 

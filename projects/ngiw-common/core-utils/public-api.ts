@@ -6,5 +6,4 @@ export *from './src/pipes/highlight.pipe';
 export * from './src/pipes/after-highlight.pipe';
 export * from './src/pipes/before-highlight.pipe';
 export * from './src/classes';
-export * from './src/core-utils.component';
 export * from './src/core-utils.module';

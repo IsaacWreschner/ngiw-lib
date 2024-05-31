@@ -1,3 +1,5 @@
+<!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
+<!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 <div class="header-cell-wrapper">
     <div *ngIf="showFilterSorter" nz-popover (click)="createSearchList()" [nzPopoverVisible]="showPopover"
         nzPopoverTrigger="click" (nzPopoverVisibleChange)="onPopoverVisibleChange()" [nzPopoverContent]="filterSorter"

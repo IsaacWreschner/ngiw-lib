@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Filter, FilterGroup } from "./filter.model";
 
-export const filterData = (data:any, filters:FilterGroup) => {
+/*export const filterData = (data:any, filters:FilterGroup) => {
      
-}
+}*/
 
 const filterRows = (rows: any[], filter: Filter, updatedProp?:string) => {
      return rows.filter(row => scanRow(row, filter, updatedProp));

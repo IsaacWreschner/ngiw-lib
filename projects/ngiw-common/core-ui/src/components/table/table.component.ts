@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ConnectionPositionPair } from '@angular/cdk/overlay';
 import { Component, ContentChild, Input, TemplateRef } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
@@ -39,11 +40,11 @@ export class TableComponent {
     yIndex?: number, xIndex?: number
   }>
     = new BehaviorSubject({});
-  isVirtualLoading: boolean = false;
+  isVirtualLoading = false;
   funcRef!: any;
   lastKeyPressTimestamp!: number;
   openCustomCtxMenu: { row: number, col: number } = { row: null as any, col: null as any };
-  isScrolling: boolean = false;
+  isScrolling = false;
   timeout!: any;
   table!: any;
   activeCell:any = {}
@@ -80,7 +81,7 @@ export class TableComponent {
   blurAllInputsChildsOnScrolling() {
     this.table = document.getElementById(this.id);
     this.table.addEventListener('scroll', () => {
-      let hasFocusedElem = this.table.contains(document.activeElement);
+      const hasFocusedElem = this.table.contains(document.activeElement);
       let isFocusedElemInput;
       if (hasFocusedElem) {
         isFocusedElemInput = document.activeElement?.matches('input')
@@ -107,11 +108,11 @@ export class TableComponent {
   }
 
   handleKeyDown(e: any, row = 0, col = 0) {
-    let keyCode = e.keyCode;
+    const keyCode = e.keyCode;
     if (keyCode > 36 && keyCode < 41)
       e.preventDefault();
-    let d = new Date()
-    let currTimestamp = d.getTime();
+    const d = new Date()
+    const currTimestamp = d.getTime();
     if (currTimestamp - this.lastKeyPressTimestamp < 50)
       return;
     switch (keyCode) {
@@ -173,7 +174,7 @@ export class TableComponent {
 
 
   onGetYRange(e: any) {
-    let len = e.length;
+    const len = e.length;
     this.YRange = [];
     Array.from({ length: len }, (x, i) => this.YRange[i] = i);
     this.YRangeBegin = e[0];
@@ -184,8 +185,8 @@ export class TableComponent {
 
   onGetXRange(e: any) {
     this.XRange = [];
-    let len = this.ngiwCols;
-    let incremente = (this.ngiwFirstColumnFixed) ? (1) : (0)
+    const len = this.ngiwCols;
+    const incremente = (this.ngiwFirstColumnFixed) ? (1) : (0)
     Array.from({ length: len - incremente }, (x, i) => this.XRange[i] = i + incremente);
     this.XRangeBegin = 0;
 
@@ -197,13 +198,13 @@ export class TableComponent {
   }
 
   onResize(width: any, col: any) {
-    let bar = document.getElementById('resize-bar');
-    let table = document.getElementById(this.id) as any;
-    let column = (<any>document.getElementById(this.id)?.firstChild?.firstChild).children[0].children[col + this.XRangeBegin];
+    const bar = document.getElementById('resize-bar');
+    const table = document.getElementById(this.id) as any;
+    const column = (<any>document.getElementById(this.id)?.firstChild?.firstChild).children[0].children[col + this.XRangeBegin];
     if (column && bar) {
-      let leftFromDocument = column.getBoundingClientRect().right + width;
-      let topFromDocument = table?.getBoundingClientRect().top;
-      let bottomMinusTop = table.getBoundingClientRect().bottom - table.getBoundingClientRect().top;
+      const leftFromDocument = column.getBoundingClientRect().right + width;
+      const topFromDocument = table?.getBoundingClientRect().top;
+      const bottomMinusTop = table.getBoundingClientRect().bottom - table.getBoundingClientRect().top;
       bar.style.left = leftFromDocument + 'px';
       bar.style.top = topFromDocument + 'px';
       bar.style.maxHeight = bottomMinusTop + 'px';
@@ -217,7 +218,7 @@ export class TableComponent {
     if (this.changedWidth) {
       this.columnsWidths[this.changedWidth.index] = this.changedWidth.newWidth;
       this.widthService.setWidth(this.changedWidth.index, this.changedWidth.newWidth);
-      let bar = document.getElementById('resize-bar') as any;
+      const bar = document.getElementById('resize-bar') as any;
       bar.style.visibility = 'hidden';
       this.detectChanges();
     }
@@ -248,6 +249,7 @@ export class TableComponent {
 
 
   detectChanges() {
+    console.log('changes detected')
   }
 
   private _setActiveCell() {

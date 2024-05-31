@@ -7,7 +7,6 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 export class WidthService {
   columnsWidths: any = {}
   columnsCallbacks: { [index: number]: BehaviorSubject<any> } = {};
-  constructor() { }
 
   setWidth(index: number, width: number) {
     this.columnsWidths[index] = width;

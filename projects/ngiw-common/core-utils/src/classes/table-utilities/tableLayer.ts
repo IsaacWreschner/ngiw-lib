@@ -1,9 +1,5 @@
 export class _TableLayerService {
 
-    constructor() {
-
-    }
-
     static setLayerOnRow = (row:any,layerName:string,layerContent:any,options?: {isLayerDependent?:boolean}) => {
        if (!row._layers) {
           row._layers = {}

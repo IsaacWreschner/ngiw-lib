@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { BehaviorSubject} from "rxjs";
 import { IUtils } from "./Iutils";
 
@@ -15,9 +16,6 @@ export class TableSelectionUtils implements IUtils {
     private data:any[] = [];
 
     public $data:BehaviorSubject<any> = new BehaviorSubject([]);
-    constructor() {
-
-    }
 
     public setData = (data:any) => {
        this.data = data;
@@ -31,8 +29,8 @@ export class TableSelectionUtils implements IUtils {
 
 
 
-    public subscribeToDataSelection = (subscriber:any) => {
-    }
+    /*public subscribeToDataSelection = (subscriber:any) => {
+    }*/
 
     private propagateChange = () => {
         this.$data.next(this.data); 

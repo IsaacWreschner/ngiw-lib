@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, Input } from '@angular/core';
 import { marked } from 'marked';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
@@ -18,11 +19,11 @@ export class MarkdownComponent {
   constructor(private sanitizer: DomSanitizer) {
 
   }
-  ngOnInit() {
+  OnInit() {
     this.renderMarkdown();
   }
  
-  ngOnChanges(e: any) {
+  OnChanges(e: any) {
     if (e && e.markdown) {
       this.renderMarkdown();
     }

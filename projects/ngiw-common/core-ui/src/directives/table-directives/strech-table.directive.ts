@@ -17,8 +17,8 @@ export class StrechTableDirective {
 
   }
   private _setTableHeight() {
-    let tTop = this.elementRef.nativeElement.offsetTop;
-    let tHeight = window.innerHeight - tTop - 25;
+    const tTop = this.elementRef.nativeElement.offsetTop;
+    const tHeight = window.innerHeight - tTop - 25;
     console.log('height:', tHeight)
     this.elementRef.nativeElement.style.height = tHeight.toString() + 'px';
   }

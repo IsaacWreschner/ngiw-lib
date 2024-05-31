@@ -12,7 +12,7 @@ export class HighlightPipe implements PipeTransform {
     const regex = new RegExp(`(${pattern})`, 'gi');
     const val = value.replace(regex, '%$1%');
     const splitted = val.split('%');
-    let toRet = '';
+    const toRet = '';
     splitted?.shift();
     splitted?.pop();
     return splitted.length > 0 ? splitted.reduce((str,chr) => str += chr) : '';

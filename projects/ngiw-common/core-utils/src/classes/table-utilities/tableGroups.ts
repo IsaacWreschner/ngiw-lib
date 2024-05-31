@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { BehaviorSubject, Subject } from "rxjs";
 import { IUtils } from "./Iutils";
 import { TableDataUtil } from "./tableData";
@@ -20,10 +21,10 @@ export class TableGroupsUtil implements IUtils {
   public $data:BehaviorSubject<any> = new BehaviorSubject([]);
 
   
-  options:{ groupBy?:string |Function } | undefined;
+  options:{ groupBy?:string | ((...args:any[]) => any) } | undefined;
 
 
-  constructor(options?:{ groupBy?:string |Function }) {
+  constructor(options?:{ groupBy?:string | ((...args:any[]) => any) }) {
       this.options = options;
   }
 

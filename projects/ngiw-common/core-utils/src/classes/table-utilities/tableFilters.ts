@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { BehaviorSubject, Subject } from "rxjs";
 import { IUtils } from "./Iutils";
 import { _TableLayerService } from "./tableLayer";

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, Input } from '@angular/core';
 import { AbstractControl, FormBuilder, ValidatorFn, Validators } from '@angular/forms';
 import { FORM_CDK_EVENTS, FormCdkModel } from '../../models/form-cdk.model';
@@ -91,9 +92,9 @@ export class FormCdkComponent<Form> extends BaseCdkComponent {
     })
   }
 
-  setDefaultValues = () => {
+ /* setDefaultValues = () => {
 
-  }
+  }*/
 
   setSources = () => {
     this.model.inputs?.forEach((input: any) => {
