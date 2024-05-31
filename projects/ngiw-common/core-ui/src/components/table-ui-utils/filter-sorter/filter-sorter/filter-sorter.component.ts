@@ -1,28 +1,27 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, input } from '@angular/core';
 //import { TranslationPipe } from 'ngiw-core-utils';
-import {Observable} from 'rxjs';
-
+import { Observable } from 'rxjs';
 
 interface ISearch {
-  label: string, id: string, checked?: boolean
+  label: string;
+  id: string;
+  checked?: boolean;
 }
- 
 
 @Component({
   selector: 'ngiw-filter-sorter',
   templateUrl: './filter-sorter.component.html',
-  styleUrls: ['./filter-sorter.component.scss']
+  styleUrls: ['./filter-sorter.component.scss'],
 })
 export class FilterSorterComponent implements OnInit {
-  @Input() ngiwListSortBy: ISearch[] = [];
-  @Input() ngiwIsCreatingList = false;
-  @Input() $ngiwSearchList!: Observable<ISearch[]>;
+  ngiwListSortBy = input<ISearch[]>([]);
+  ngiwIsCreatingList = input(false);
+  $ngiwSearchList = input<Observable<ISearch[]>>();
   @Output() ngiwSorted = new EventEmitter();
   @Output() ngiwFilter = new EventEmitter();
 
   section: 'filter' | 'sort' | 'none' = 'none';
-
 
   //constructor(/*private translate:TranslationPipe*/) { }
 
@@ -31,18 +30,18 @@ export class FilterSorterComponent implements OnInit {
   fullSearchList: any;
   isFilterError = false;
 
-  mode: "asc" | "desc" | "none" = "none";
+  mode: 'asc' | 'desc' | 'none' = 'none';
   tmpSortList: any[] = [];
   sortId: any;
 
   ngOnInit(): void {
     this.onSectionFilter();
 
-    this.$ngiwSearchList?.subscribe((list:any) => {
+    this.$ngiwSearchList()?.subscribe((list: any) => {
       this._initSearchList(list);
-    })
+    });
     //setInterval(() => {
-      //console.log(this.ngiwSearchList)
+    //console.log(this.ngiwSearchList)
     //},1000)
   }
 
@@ -51,12 +50,12 @@ export class FilterSorterComponent implements OnInit {
     setTimeout(() => {
       const elem = document.getElementById('input-filter');
       if (elem) {
-        elem.focus()
+        elem.focus();
       }
-    }, 200)
+    }, 200);
   }
 
-  onInputSearch(event:any) {
+  onInputSearch(event: any) {
     const searchPattern = event.target.value;
     this.tmpSearchList = this.top100(this.filter(searchPattern));
   }
@@ -78,26 +77,28 @@ export class FilterSorterComponent implements OnInit {
     this.section = 'sort';
   }
 
-  _initSearchList(list:any) {
+  _initSearchList(list: any) {
     console.log(list);
     this.fullSearchList = list;
-    this.tmpSearchList =  this.top100(this.filter(''));
-    this.tmpSortList = this.ngiwListSortBy;
-    if (this.ngiwListSortBy && this.ngiwListSortBy[0])
-      this.sortId = this.ngiwListSortBy[0].id;
+    this.tmpSearchList = this.top100(this.filter(''));
+    this.tmpSortList = this.ngiwListSortBy();
+    if (this.ngiwListSortBy() && this.ngiwListSortBy()[0])
+      this.sortId = this.ngiwListSortBy()[0].id;
   }
 
-  onChangeSortMode = (mode:'asc' | 'desc') => {
+  onChangeSortMode = (mode: 'asc' | 'desc') => {
     this.mode = mode;
     this.onSort();
-  }
+  };
 
-  top100 = (list:any) => {
-      return list.filter((x:any,i:number) => i < 100);
-  }
+  top100 = (list: any) => {
+    return list.filter((x: any, i: number) => i < 100);
+  };
 
-  filter = (searchPattern:string) => {
-    return this.fullSearchList.filter((searchRow:any) => searchRow.label !== '' && searchRow.label?.includes(searchPattern))
-  }
+  filter = (searchPattern: string) => {
+    return this.fullSearchList.filter(
+      (searchRow: any) =>
+        searchRow.label !== '' && searchRow.label?.includes(searchPattern),
+    );
+  };
 }
-

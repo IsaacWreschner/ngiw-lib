@@ -1,24 +1,13 @@
-/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "ngiw-common": [
-        "projects/ngiw-common"
-      ],
-      "ngiw-common/core-utils": [
-        "projects/ngiw-common/core-utils"
-      ],
-      "ngiw-common/core-ui": [
-        "projects/ngiw-common/core-ui"
-      ],
-      "ngiw-common/cdk": [
-        "projects/ngiw-common/cdk"
-      ],
-      "ngiw-common/domain-utils": [
-        "projects/ngiw-common/domain-utils"
-      ]
+      "ngiw-common": ["projects/ngiw-common"],
+      "ngiw-common/cdk": ["projects/ngiw-common/cdk"],
+      "ngiw-common/core-ui": ["projects/ngiw-common/core-ui"],
+      "ngiw-common/core-utils": ["projects/ngiw-common/core-utils"],
+      "ngiw-common/domain-utils": ["projects/ngiw-common/domain-utils"]
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
@@ -36,10 +25,8 @@
     "target": "ES2022",
     "module": "ES2022",
     "useDefineForClassFields": false,
-    "lib": [
-      "ES2022",
-      "dom"
-    ],
+    "lib": ["ES2022", "dom"],
+    "skipLibCheck": true
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

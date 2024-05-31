@@ -1,14 +1,12 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 @Component({
-  selector: 'ngiw-text-prettify', 
+  selector: 'ngiw-text-prettify',
   templateUrl: './text-prettify.component.html',
-  styleUrls: ['./text-prettify.component.scss']
+  styleUrls: ['./text-prettify.component.scss'],
 })
 export class TextPrettifyComponent {
-  @Input() ngiwText = '';
-  @Input() ngiwHightlightPattern = ''; 
-  @Input() ngiwHightlighColor = '';
-
+  ngiwText = input('');
+  ngiwHightlightPattern = input('');
+  ngiwHightlighColor = input('');
 }
- 

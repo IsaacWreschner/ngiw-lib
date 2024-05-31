@@ -1,53 +1,56 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Output, input } from '@angular/core';
 import { NzUploadFile } from 'ng-zorro-antd/upload';
 import { Observable } from 'rxjs';
 
 @Component({
   selector: 'ngiw-file-upload',
   templateUrl: './file-upload.component.html',
-  styleUrls: ['./file-upload.component.css']
+  styleUrls: ['./file-upload.component.css'],
 })
 export class FileUploadComponent {
+  ngiwFormat = input('jpg');
+  ngiwUploadPath = input<
+    string | ((file: NzUploadFile) => string | Observable<string>)
+  >();
+  ngiwDisplay = input<any>('text');
+  ngiwFiles = input<any>([]);
+  ngiwMaxUploads = input(0);
+  ngiwMultiSelect = input(false);
+  ngiwAddFileLabel = input('Add File');
+  ngiwHint = input('');
 
-  @Input() ngiwFormat = 'jpg';
-  @Input() ngiwUploadPath!: string | ((file: NzUploadFile) => string | Observable<string>);
-  @Input() ngiwDisplay:any = 'text';
-  @Input() ngiwFiles:any = [];
-  @Input() ngiwMaxUploads = 0;
-  @Input() ngiwMultiSelect = false;
-  @Input() ngiwAddFileLabel = 'Add File';
-  @Input() ngiwHint = '';
-
-  @Output()ngiwFilesChanged = new EventEmitter();
-
+  @Output() ngiwFilesChanged = new EventEmitter();
 
   previewImage: string | undefined = '';
   previewVisible = false;
 
   ngOnInit() {
-     setInterval(() => {
-      console.log(this.ngiwFiles)
-     },2000)
+    setInterval(() => {
+      console.log(this.ngiwFiles());
+    }, 2000);
   }
 
   isMultiSelectEnabled = () => {
-    return this.ngiwMultiSelect && (this.isFilesUploadUnlimited() || this.getMaxFilesToUpload() > 1) ;
-  }
+    return (
+      this.ngiwMultiSelect() &&
+      (this.isFilesUploadUnlimited() || this.getMaxFilesToUpload() > 1)
+    );
+  };
 
   canUploadMoreFiles = () => {
     return this.isFilesUploadUnlimited() || this.getMaxFilesToUpload() > 0;
-  }
+  };
 
   isFilesUploadUnlimited = () => {
-    return this.ngiwMaxUploads < 1;
-  }
+    return this.ngiwMaxUploads() < 1;
+  };
 
   getMaxFilesToUpload = () => {
-    return this.ngiwMaxUploads - this.ngiwFiles.length;
-  }
+    return this.ngiwMaxUploads() - this.ngiwFiles().length;
+  };
 
   handlePreview = async (file: NzUploadFile): Promise<void> => {
-    console.log(file)
+    console.log(file);
     if (!file.url && !file['preview']) {
       file['preview'] = await this.getBase64(file.originFileObj!);
     }
@@ -60,10 +63,10 @@ export class FileUploadComponent {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => resolve(reader.result);
-      reader.onerror = error => reject(error);
+      reader.onerror = (error) => reject(error);
     });
 
-    onUploadStateChanged = () => {
-      this.ngiwFilesChanged.emit(this.ngiwFiles);
-    }
+  onUploadStateChanged = () => {
+    this.ngiwFilesChanged.emit(this.ngiwFiles());
+  };
 }

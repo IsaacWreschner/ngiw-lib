@@ -1,30 +1,71 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-
+import { Component, EventEmitter, Output, input } from '@angular/core';
 
 type Node = {
-  value:any,
-  label:any,
-  children?:Node[],
-  isLeaf?:boolean
-}
+  value: any;
+  label: any;
+  children?: Node[];
+  isLeaf?: boolean;
+};
 @Component({
   selector: 'ngiw-multiselect',
   templateUrl: './multiselect.component.html',
-  styleUrls: ['./multiselect.component.scss']
+  styleUrls: ['./multiselect.component.scss'],
 })
 export class MultiSelectComponent {
-  @Input() ngiwWidth = 200;
+  /*setModelFromId = () => {
+      let val =  this.ngiwValue
+      if (typeof this.ngiwValue === 'object') {
+            val = this.ngiwValue[0];
+      }
+      this.ngiwValue = [this.childToParent[val], JSON.stringify(this.ngiwValue)];
+    }*/
+  ngiwWidth = input(200);
 
-  @Input() ngiwOptions!: Node[];
+  /*setModelFromId = () => {
+      let val =  this.ngiwValue
+      if (typeof this.ngiwValue === 'object') {
+            val = this.ngiwValue[0];
+      }
+      this.ngiwValue = [this.childToParent[val], JSON.stringify(this.ngiwValue)];
+    }*/
+  ngiwOptions = input<Node[]>();
 
-  @Input() ngiwPlaceholder!: string;
+  /*setModelFromId = () => {
+      let val =  this.ngiwValue
+      if (typeof this.ngiwValue === 'object') {
+            val = this.ngiwValue[0];
+      }
+      this.ngiwValue = [this.childToParent[val], JSON.stringify(this.ngiwValue)];
+    }*/
+  ngiwPlaceholder = input<string>();
 
-  @Input() ngiwIsParentSelectable = true;
+  /*setModelFromId = () => {
+      let val =  this.ngiwValue
+      if (typeof this.ngiwValue === 'object') {
+            val = this.ngiwValue[0];
+      }
+      this.ngiwValue = [this.childToParent[val], JSON.stringify(this.ngiwValue)];
+    }*/
+  ngiwIsParentSelectable = input(true);
 
-  @Input() ngiwValue:any | any[] = null;
+  /*setModelFromId = () => {
+      let val =  this.ngiwValue
+      if (typeof this.ngiwValue === 'object') {
+            val = this.ngiwValue[0];
+      }
+      this.ngiwValue = [this.childToParent[val], JSON.stringify(this.ngiwValue)];
+    }*/
+  ngiwValue = input<any | any[]>(null);
 
-  @Input() ngiwTransform: any = null /*{
+  /*setModelFromId = () => {
+      let val =  this.ngiwValue
+      if (typeof this.ngiwValue === 'object') {
+            val = this.ngiwValue[0];
+      }
+      this.ngiwValue = [this.childToParent[val], JSON.stringify(this.ngiwValue)];
+    }*/
+  ngiwTransform = input<any>(null); /*{
        value: 'parentId',
        label: 'name',
        children: {
@@ -38,23 +79,22 @@ export class MultiSelectComponent {
 
   childToParent: { [key: number]: number } = {};
 
-
   OnInit(): void {
-    console.log(this.ngiwOptions)
-    this.transformOptions(this.ngiwOptions, this.ngiwTransform);
-    this.setChildToParent();  
+    console.log(this.ngiwOptions());
+    this.transformOptions(this.ngiwOptions(), this.ngiwTransform());
+    this.setChildToParent();
   }
 
-  OnChanges(e:any){
+  OnChanges(e: any) {
     if (e.ngiwOptions) {
-      this.transformOptions(e.ngiwOptions.currentValue, this.ngiwTransform);
+      this.transformOptions(e.ngiwOptions.currentValue, this.ngiwTransform());
       this.setChildToParent();
     }
   }
 
-  transformOptions = (options:any, transform:any) => {
-    console.log(options)
-    options?.forEach((parent:Node) => {
+  transformOptions = (options: any, transform: any) => {
+    console.log(options);
+    options?.forEach((parent: Node) => {
       if (transform?.label) {
         parent.label = (parent as any)[transform.label];
       }
@@ -66,30 +106,33 @@ export class MultiSelectComponent {
         const childTransform = transform.children;
         if (parent.children) {
           this.transformOptions(parent.children, childTransform);
-        } 
-      } 
+        }
+      }
     });
-  }
+  };
 
   setChildToParent = () => {
-    this.ngiwOptions?.forEach((parent:Node) => {
-      if (this.ngiwIsParentSelectable && (parent.children as any) && (parent.children as any)[0].label !== 'בחר הכל') {
-        parent.children?.unshift(
-          {
-            label:'בחר הכל', 
-            value: JSON.stringify(parent.children.map(child => child.value))
+    this.ngiwOptions()?.forEach((parent: Node) => {
+      if (
+        this.ngiwIsParentSelectable() &&
+        (parent.children as any) &&
+        (parent.children as any)[0].label !== 'בחר הכל'
+      ) {
+        parent.children?.unshift({
+          label: 'בחר הכל',
+          value: JSON.stringify(parent.children.map((child) => child.value)),
         });
       }
-      parent.children?.forEach((child:Node) => {
+      parent.children?.forEach((child: Node) => {
         child.isLeaf = true;
         this.childToParent[child.value] = parent.value;
-      })
+      });
     });
     //this.setModelFromId();
-  }
+  };
 
   onValueChanges(values: string[]): void {
-    console.log(this.ngiwValue)
+    console.log(this.ngiwValue());
     this.valueChanged.emit(values[1]);
   }
 
@@ -101,7 +144,3 @@ export class MultiSelectComponent {
     this.ngiwValue = [this.childToParent[val], JSON.stringify(this.ngiwValue)];
   }*/
 }
-
-
-  
-

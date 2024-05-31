@@ -1,29 +1,36 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @angular-eslint/no-output-on-prefix */
-import { Component, Input, OnInit, Output, EventEmitter, ViewEncapsulation, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  ViewEncapsulation,
+  ChangeDetectorRef,
+  input,
+} from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 @Component({
   selector: 'ngiw-header-cell',
   templateUrl: './header-cell.component.html',
   styleUrls: ['./header-cell.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class HeaderCellComponent {
-  @Input() showFilterSorter = false;
-  @Input() headerLabel = '';
-  @Input() searchList: any[] = undefined as any;
-  @Input() createSearchListFn: () => any[] = undefined as any;
+  showFilterSorter = input(false);
+  headerLabel = input('');
+  searchList = input<any[]>(undefined as any);
+  createSearchListFn = input<() => any[]>(undefined as any);
 
   @Output() onFilter = new EventEmitter();
-  @Output() onUndoFilter = new EventEmitter()
+  @Output() onUndoFilter = new EventEmitter();
 
   locker = false;
   showPopover = false;
   currentSearchList: BehaviorSubject<any> = new BehaviorSubject([]);
   currentFilter = [];
   isCreatingList = false;
-  constructor(private ref: ChangeDetectorRef) { }
-
+  constructor(private ref: ChangeDetectorRef) {}
 
   public columnHasFilter() {
     return this.currentFilter.length > 0;
@@ -34,21 +41,19 @@ export class HeaderCellComponent {
     this.onUndoFilter.emit();
   }
 
-
-
   public createSearchList() {
-    if (!this.searchList && typeof this.createSearchListFn === 'function') {
+    if (!this.searchList() && typeof this.createSearchListFn() === 'function') {
       this.isCreatingList = true;
       setTimeout(() => {
-        const list = this.createSearchListFn();
-        list.forEach(row => { if (typeof row.label === 'number') row.label = row.label.toString() });
+        const list = this.createSearchListFn()();
+        list.forEach((row) => {
+          if (typeof row.label === 'number') row.label = row.label.toString();
+        });
         this.isCreatingList = false;
         this.currentSearchList.next(list);
       });
     }
   }
-
-
 
   public onSortColumn(event?: any) {
     if (event) {
@@ -68,8 +73,8 @@ export class HeaderCellComponent {
     this.locker = true;
     setTimeout(() => {
       this.locker = false;
-    }, 500)
-  }
+    }, 500);
+  };
 
   public onPopoverVisibleChange() {
     if (this.locker) {
@@ -78,4 +83,3 @@ export class HeaderCellComponent {
     this.showPopover = !this.showPopover;
   }
 }
-

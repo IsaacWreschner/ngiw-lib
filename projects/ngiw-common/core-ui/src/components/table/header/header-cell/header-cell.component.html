@@ -1,36 +1,62 @@
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 <div class="header-cell-wrapper">
-    <div *ngIf="showFilterSorter" nz-popover (click)="createSearchList()" [nzPopoverVisible]="showPopover"
-        nzPopoverTrigger="click" (nzPopoverVisibleChange)="onPopoverVisibleChange()" [nzPopoverContent]="filterSorter"
-        class="show-filter-sorter">
-        <div class="sorter-section">
-            <div (click)="onSortColumn($event)" matRipple  nzTooltipTitle="מיין"
-                nzTooltipPlacement="left" nz-tooltip>
-                <div>
-                    <mat-icon>
-                        swap_vert
-                    </mat-icon>
-                </div>
-            </div>
+  @if (showFilterSorter()) {
+    <div
+      nz-popover
+      (click)="createSearchList()"
+      [nzPopoverVisible]="showPopover"
+      nzPopoverTrigger="click"
+      (nzPopoverVisibleChange)="onPopoverVisibleChange()"
+      [nzPopoverContent]="filterSorter"
+      class="show-filter-sorter"
+    >
+      <div class="sorter-section">
+        <div
+          (click)="onSortColumn($event)"
+          matRipple
+          nzTooltipTitle="מיין"
+          nzTooltipPlacement="left"
+          nz-tooltip
+        >
+          <div>
+            <mat-icon> swap_vert </mat-icon>
+          </div>
         </div>
-        <div class = "undo-filter" (click)="$event.stopPropagation(); columnUndoFilter()" *ngIf="columnHasFilter()">
-            <div matRipple>
-                <span class = "filter-icon" nz-icon nzType="filter" nzTheme="outline"></span>
-            </div>
+      </div>
+      @if (columnHasFilter()) {
+        <div
+          class="undo-filter"
+          (click)="$event.stopPropagation(); columnUndoFilter()"
+        >
+          <div matRipple>
+            <span
+              class="filter-icon"
+              nz-icon
+              nzType="filter"
+              nzTheme="outline"
+            ></span>
+          </div>
         </div>
-        <div class = "header-label">
-            {{ headerLabel }}
-        </div>      
+      }
+      <div class="header-label">
+        {{ headerLabel() }}
+      </div>
     </div>
-    
-    <div  *ngIf="!showFilterSorter">
-        {{ headerLabel }}
+  }
+
+  @if (!showFilterSorter()) {
+    <div>
+      {{ headerLabel() }}
     </div>
+  }
 </div>
 
 <ng-template #filterSorter>
-    <ngiw-filter-sorter (ngiwFilter)="onFilterCol($event)" [ngiwIsCreatingList] = "isCreatingList" [$ngiwSearchList]="currentSearchList">
-    </ngiw-filter-sorter>
+  <ngiw-filter-sorter
+    (ngiwFilter)="onFilterCol($event)"
+    [ngiwIsCreatingList]="isCreatingList"
+    [$ngiwSearchList]="currentSearchList"
+  >
+  </ngiw-filter-sorter>
 </ng-template>
-

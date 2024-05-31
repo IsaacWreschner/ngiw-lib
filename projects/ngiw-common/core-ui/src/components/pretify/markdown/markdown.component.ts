@@ -1,28 +1,26 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { marked } from 'marked';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser'
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'ngiw-markdown',
   templateUrl: './markdown.component.html',
-  styleUrls: ['./markdown.component.css']
+  styleUrls: ['./markdown.component.css'],
 })
 export class MarkdownComponent {
-  @Input() markdown = ` **פעם ראשונה** : חח😂
+  markdown = input(` **פעם ראשונה** : חח😂
 
-  **פעם שניה**: עצוב 😢 למה ?`
+  **פעם שניה**: עצוב 😢 למה ?`);
 
-  @Input() interpolation: any = {}
+  interpolation = input<any>({});
   html!: SafeHtml;
 
-  constructor(private sanitizer: DomSanitizer) {
-
-  }
+  constructor(private sanitizer: DomSanitizer) {}
   OnInit() {
     this.renderMarkdown();
   }
- 
+
   OnChanges(e: any) {
     if (e && e.markdown) {
       this.renderMarkdown();
@@ -30,21 +28,26 @@ export class MarkdownComponent {
   }
 
   interpolateText = () => {
-    let interploated = this.markdown;
-    Object.keys(this.interpolation).forEach(interploationKey => {
-      interploated = interploated.replace(`{{${interploationKey}}}`, this.interpolation[interploationKey] as string)
+    let interploated = this.markdown();
+    Object.keys(this.interpolation()).forEach((interploationKey) => {
+      interploated = interploated.replace(
+        `{{${interploationKey}}}`,
+        this.interpolation()[interploationKey] as string,
+      );
     });
     return interploated;
-  }
+  };
 
   renderMarkdown = async () => {
     const finalText = this.interpolateText();
     if (finalText) {
-      this.html = this.sanitizer.bypassSecurityTrustHtml(await this.getMarkdownAsHtml(finalText));
+      this.html = this.sanitizer.bypassSecurityTrustHtml(
+        await this.getMarkdownAsHtml(finalText),
+      );
     }
-  }
+  };
 
   getMarkdownAsHtml = async (markdown: string) => {
-    return await marked.parse(markdown)
-  }
+    return await marked.parse(markdown);
+  };
 }

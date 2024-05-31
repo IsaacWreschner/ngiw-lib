@@ -30,6 +30,7 @@
     "@angular/router": "^17.3.10",
     "marked": "^11.0.0",
     "ng-zorro-antd": "17.4.1",
+    "ngxtension": "^3.4.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.6"

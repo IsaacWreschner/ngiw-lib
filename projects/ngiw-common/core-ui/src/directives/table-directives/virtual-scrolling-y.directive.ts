@@ -1,10 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { Directive, ElementRef, EventEmitter, Input, Output } from '@angular/core';
-
+import {
+  Directive,
+  ElementRef,
+  EventEmitter,
+  Output,
+  input,
+} from '@angular/core';
 
 @Directive({
-  selector: '[ngiwVirtualScrollingY]'
+  selector: '[ngiwVirtualScrollingY]',
 })
 /**
  * @param {number} ngiwRecordsLength The length of all records;
@@ -21,29 +26,24 @@ export class VirtualScrollingYDirective {
   scrollTop = 0;
   lastPosition = 0;
   timeout!: any;
-  @Input() ngiwRecordsLength!: number;
-  @Input() ngiwArrowsKeysObservable: any;
+  ngiwRecordsLength = input<number>();
+  ngiwArrowsKeysObservable = input<any>();
   @Output() ngiwGetYRange = new EventEmitter();
   @Output() ngiwIsLoading = new EventEmitter();
   @Output() ngiwGetVirtualContainersHeights = new EventEmitter();
-
-
-
-
 
   constructor(private elem: ElementRef) {
     this.elem.nativeElement.onscroll = (e: any) => {
       this.scrollTop = this.elem.nativeElement.scrollTop;
       this._vsManager();
       this.lastPosition = this.elem.nativeElement.scrollTop;
-    }
+    };
 
     setTimeout(() => {
       this._vsManager();
-      if (this.ngiwArrowsKeysObservable) {
-        this.ngiwArrowsKeysObservable.subscribe((e: any) => {
-          if (!e.type)
-            return;
+      if (this.ngiwArrowsKeysObservable()) {
+        this.ngiwArrowsKeysObservable()!.subscribe((e: any) => {
+          if (!e.type) return;
           switch (e.type) {
             case 'down':
               this._onKeyDown(e.yIndex, e.xIndex);
@@ -52,9 +52,9 @@ export class VirtualScrollingYDirective {
               this._onKeyUp(e.yIndex, e.xIndex);
               break;
           }
-        })
+        });
       }
-    }, 50)
+    }, 50);
   }
 
   OnChanges(e: any) {
@@ -62,18 +62,24 @@ export class VirtualScrollingYDirective {
   }
 
   private _getHeadAndRowsHeight(): boolean {
-    if (!this.elem.nativeElement.firstChild ||
+    if (
+      !this.elem.nativeElement.firstChild ||
       !this.elem.nativeElement.firstChild.firstChild.children[0] ||
-      !this.elem.nativeElement.firstChild.firstChild.children[2]) {
+      !this.elem.nativeElement.firstChild.firstChild.children[2]
+    ) {
       this.ngiwGetYRange.emit([0]);
       this.ngiwIsLoading.emit(true);
-      setTimeout(() => { this._vsManager() }, 50);
-      setTimeout(() => { this.ngiwIsLoading.emit(false); }, 1000);
+      setTimeout(() => {
+        this._vsManager();
+      }, 50);
+      setTimeout(() => {
+        this.ngiwIsLoading.emit(false);
+      }, 1000);
       return false;
     }
     this.headHeight = 30;
     this.rowHeight = 30;
-    return true
+    return true;
   }
 
   private _vsManager() {
@@ -84,57 +90,79 @@ export class VirtualScrollingYDirective {
     const rowsDispatchedHeight = amountOfRowsToDispatch * this.rowHeight;
     let currScrollPosition = this.elem.nativeElement.scrollTop;
 
-    currScrollPosition = this._preventScrollPositionOverload(currScrollPosition,
-      scrollBarHeight, rowsDispatchedHeight);  /*prevent curr scroll position to overload */
-    this._setYRange(currScrollPosition, amountOfRowsToDispatch);//set the height of the virtual containers */
-    this._setVirtualContainers(currScrollPosition, scrollBarHeight, rowsDispatchedHeight);
-    clearTimeout(this.timeout)
+    currScrollPosition = this._preventScrollPositionOverload(
+      currScrollPosition,
+      scrollBarHeight,
+      rowsDispatchedHeight,
+    ); /*prevent curr scroll position to overload */
+    this._setYRange(currScrollPosition, amountOfRowsToDispatch); //set the height of the virtual containers */
+    this._setVirtualContainers(
+      currScrollPosition,
+      scrollBarHeight,
+      rowsDispatchedHeight,
+    );
+    clearTimeout(this.timeout);
     if (Math.abs(this.lastPosition - this.elem.nativeElement.scrollTop) > 80) {
       this.timeout = setTimeout(() => {
         this.ngiwGetYRange.emit(this.YRange);
-        this.ngiwGetVirtualContainersHeights.emit(this.virtualContainers)
+        this.ngiwGetVirtualContainersHeights.emit(this.virtualContainers);
       }, 70);
     } else {
       this.ngiwGetYRange.emit(this.YRange);
-      this.ngiwGetVirtualContainersHeights.emit(this.virtualContainers)
+      this.ngiwGetVirtualContainersHeights.emit(this.virtualContainers);
     }
   }
 
   private _calculateScrollBarHeight() {
-    return this.headHeight + (this.rowHeight * this.ngiwRecordsLength);
+    return this.headHeight + this.rowHeight * this.ngiwRecordsLength();
   }
 
-  private _preventScrollPositionOverload(currScrollPosition: number, scrollBarHeight: number, rowsDispatchedHeight: number): number {
-    if (currScrollPosition > (scrollBarHeight - rowsDispatchedHeight))
+  private _preventScrollPositionOverload(
+    currScrollPosition: number,
+    scrollBarHeight: number,
+    rowsDispatchedHeight: number,
+  ): number {
+    if (currScrollPosition > scrollBarHeight - rowsDispatchedHeight)
       currScrollPosition = scrollBarHeight - rowsDispatchedHeight;
     return currScrollPosition;
   }
 
-
-  private _setVirtualContainers(currScrollPosition: number, scrollBarHeight: number, rowsDispatchedHeight: number) {
-    const beforeCtnHeight = currScrollPosition // Math.floor(currScrollPosition/this.rowHeight) * this.rowHeight; // to make virtual scrolling look great !!
-    const afterCtnHeight = scrollBarHeight - (currScrollPosition + rowsDispatchedHeight);
-    const virtualContainerBefore = this.elem.nativeElement.querySelector('#virtual-container-before');
-    const virtualContainerAfter = this.elem.nativeElement.querySelector('#virtual-container-after');
+  private _setVirtualContainers(
+    currScrollPosition: number,
+    scrollBarHeight: number,
+    rowsDispatchedHeight: number,
+  ) {
+    const beforeCtnHeight = currScrollPosition; // Math.floor(currScrollPosition/this.rowHeight) * this.rowHeight; // to make virtual scrolling look great !!
+    const afterCtnHeight =
+      scrollBarHeight - (currScrollPosition + rowsDispatchedHeight);
+    const virtualContainerBefore = this.elem.nativeElement.querySelector(
+      '#virtual-container-before',
+    );
+    const virtualContainerAfter = this.elem.nativeElement.querySelector(
+      '#virtual-container-after',
+    );
     virtualContainerAfter.style.height = `${afterCtnHeight}px`;
     virtualContainerBefore.style.height = `${beforeCtnHeight}px`;
     this.virtualContainers = [beforeCtnHeight, afterCtnHeight];
   }
 
-
   private _getAmountOfRowsToDispatch() {
-    let amountOfRows = Math.floor((this._tblWrapper().offsetHeight - this.headHeight) / this.rowHeight);
-    if (amountOfRows > this.ngiwRecordsLength)
-      amountOfRows = this.ngiwRecordsLength;   //this.virtualRowsCountIsSet = true;
+    let amountOfRows = Math.floor(
+      (this._tblWrapper().offsetHeight - this.headHeight) / this.rowHeight,
+    );
+    if (amountOfRows > this.ngiwRecordsLength())
+      amountOfRows = this.ngiwRecordsLength(); //this.virtualRowsCountIsSet = true;
     return amountOfRows;
   }
 
   private _setYRange(beforeCtnHeight: number, amountOfRowsToDispatch: number) {
     let rangeBegin = Math.floor(beforeCtnHeight / this.rowHeight);
-    if ((amountOfRowsToDispatch + rangeBegin) > this.ngiwRecordsLength)
-      rangeBegin = this.ngiwRecordsLength - amountOfRowsToDispatch;
-    this.YRange = Array.from({ length: amountOfRowsToDispatch },
-      (x, i) => x = i + rangeBegin);
+    if (amountOfRowsToDispatch + rangeBegin > this.ngiwRecordsLength())
+      rangeBegin = this.ngiwRecordsLength() - amountOfRowsToDispatch;
+    this.YRange = Array.from(
+      { length: amountOfRowsToDispatch },
+      (x, i) => (x = i + rangeBegin),
+    );
     return rangeBegin;
   }
 
@@ -168,19 +196,16 @@ export class VirtualScrollingYDirective {
         nthRow.children[indexColumn].focus();
       }
     }
-    if (trTop && trTop <= 50)
-      this._scroll(-50);
+    if (trTop && trTop <= 50) this._scroll(-50);
   }
 
   private _tblWrapper() {
     return this.elem.nativeElement;
   }
 
-
   private _nthRow(n: number) {
     return this.elem.nativeElement.firstChild.firstChild.children[n];
   }
-
 
   private _tblWrapperTop() {
     return this.elem.nativeElement.getBoundingClientRect().y;
