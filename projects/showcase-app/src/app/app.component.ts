@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'showcase-app';
-  entryValue = 6;
+  entryValue = 11;
   selectedValue = this.entryValue;
   placeholder = 'Select an option'
   options =  [

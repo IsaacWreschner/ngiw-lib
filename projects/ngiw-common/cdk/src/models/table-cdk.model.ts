@@ -1,21 +1,27 @@
-import { TemplateRef } from "@angular/core";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Signal, TemplateRef } from "@angular/core";
 import { BaseCdkModel } from "./base-cdk.model";
 
 export interface TableCdkModel<RowModel> extends BaseCdkModel {
     $source: any;
     $freeSearchPattern: any;
     freeSearchProps: string[];
-    virtualProps: { [key: string]: () => any };
+    virtualProps: { [key: string]: (row: RowModel) => any };
     asyncVirtualProps: { [key: string]: (row: RowModel) => Promise<any> };
     firstColumn: any;
+    groupBy?: string;
+    showFilterInHeader?: boolean;
     columns: ColumnCdkModel<RowModel>[];
-    state: {
-        $rowsAmount: (amount: number) => void;
+    state?: {
+        
+        $rowsAmount: Signal<number> 
+        $data: Signal<RowModel[]> 
+       /* $rowsAmount: (amount: number) => void;
         $data: (data: RowModel[], event: {
             row: RowModel;
             prop: keyof RowModel;
             newValue: any;
-        }) => void;
+        }) => void;*/
     };
     api: any;
 }

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, EventEmitter, Output, input } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, input } from '@angular/core';
 
 type Node = {
   value: any;
@@ -12,59 +12,13 @@ type Node = {
   templateUrl: './multiselect.component.html',
   styleUrls: ['./multiselect.component.scss'],
 })
-export class MultiSelectComponent {
-  /*setModelFromId = () => {
-      let val =  this.ngiwValue
-      if (typeof this.ngiwValue === 'object') {
-            val = this.ngiwValue[0];
-      }
-      this.ngiwValue = [this.childToParent[val], JSON.stringify(this.ngiwValue)];
-    }*/
+export class MultiSelectComponent implements OnInit, OnChanges {
+  
   ngiwWidth = input(200);
-
-  /*setModelFromId = () => {
-      let val =  this.ngiwValue
-      if (typeof this.ngiwValue === 'object') {
-            val = this.ngiwValue[0];
-      }
-      this.ngiwValue = [this.childToParent[val], JSON.stringify(this.ngiwValue)];
-    }*/
-  ngiwOptions = input<Node[]>();
-
-  /*setModelFromId = () => {
-      let val =  this.ngiwValue
-      if (typeof this.ngiwValue === 'object') {
-            val = this.ngiwValue[0];
-      }
-      this.ngiwValue = [this.childToParent[val], JSON.stringify(this.ngiwValue)];
-    }*/
-  ngiwPlaceholder = input<string>();
-
-  /*setModelFromId = () => {
-      let val =  this.ngiwValue
-      if (typeof this.ngiwValue === 'object') {
-            val = this.ngiwValue[0];
-      }
-      this.ngiwValue = [this.childToParent[val], JSON.stringify(this.ngiwValue)];
-    }*/
+  ngiwOptions = input<Node[]>([]);
+  ngiwPlaceholder = input<string>('');
   ngiwIsParentSelectable = input(true);
-
-  /*setModelFromId = () => {
-      let val =  this.ngiwValue
-      if (typeof this.ngiwValue === 'object') {
-            val = this.ngiwValue[0];
-      }
-      this.ngiwValue = [this.childToParent[val], JSON.stringify(this.ngiwValue)];
-    }*/
   ngiwValue = input<any | any[]>(null);
-
-  /*setModelFromId = () => {
-      let val =  this.ngiwValue
-      if (typeof this.ngiwValue === 'object') {
-            val = this.ngiwValue[0];
-      }
-      this.ngiwValue = [this.childToParent[val], JSON.stringify(this.ngiwValue)];
-    }*/
   ngiwTransform = input<any>(null); /*{
        value: 'parentId',
        label: 'name',
@@ -78,14 +32,15 @@ export class MultiSelectComponent {
   @Output() valueChanged = new EventEmitter();
 
   childToParent: { [key: number]: number } = {};
+  value: any = [];
 
-  OnInit(): void {
+  ngOnInit(): void {
     console.log(this.ngiwOptions());
     this.transformOptions(this.ngiwOptions(), this.ngiwTransform());
     this.setChildToParent();
   }
 
-  OnChanges(e: any) {
+  ngOnChanges(e: any) {
     if (e.ngiwOptions) {
       this.transformOptions(e.ngiwOptions.currentValue, this.ngiwTransform());
       this.setChildToParent();
@@ -93,7 +48,6 @@ export class MultiSelectComponent {
   }
 
   transformOptions = (options: any, transform: any) => {
-    console.log(options);
     options?.forEach((parent: Node) => {
       if (transform?.label) {
         parent.label = (parent as any)[transform.label];
@@ -113,6 +67,10 @@ export class MultiSelectComponent {
 
   setChildToParent = () => {
     this.ngiwOptions()?.forEach((parent: Node) => {
+      if (!parent.children) {
+        parent.isLeaf = true;
+        this.childToParent[parent.value] = parent.value;
+      }
       if (
         this.ngiwIsParentSelectable() &&
         (parent.children as any) &&
@@ -128,19 +86,24 @@ export class MultiSelectComponent {
         this.childToParent[child.value] = parent.value;
       });
     });
-    //this.setModelFromId();
+    this.setModelFromId();
   };
 
   onValueChanges(values: string[]): void {
-    console.log(this.ngiwValue());
-    this.valueChanged.emit(values[1]);
+    console.log(values);
+    this.valueChanged.emit(values[values.length - 1]);
   }
 
-  /*setModelFromId = () => {
-    let val =  this.ngiwValue
-    if (typeof this.ngiwValue === 'object') {
-          val = this.ngiwValue[0];
+  setModelFromId = () => {
+    let tmp =  this.ngiwValue()
+    if (typeof this.ngiwValue() === 'object') {
+          tmp = this.ngiwValue()[0];
     }
-    this.ngiwValue = [this.childToParent[val], JSON.stringify(this.ngiwValue)];
-  }*/
+    if (this.childToParent[tmp] === tmp) {
+      this.value = [tmp];
+      return
+    }
+    //this.value = [this.childToParent[tmp], tmp];
+    this.value = [this.childToParent[tmp], JSON.stringify(this.ngiwValue())];
+  }
 }

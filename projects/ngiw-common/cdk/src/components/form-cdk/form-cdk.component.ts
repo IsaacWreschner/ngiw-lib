@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, input } from '@angular/core';
+import { AfterViewInit, Component, input } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
   ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { FORM_CDK_EVENTS, FormCdkModel } from '../../models/form-cdk.model';
+import { FORM_CDK_EVENTS, FormCdkInputModel, FormCdkModel } from '../../models/form-cdk.model';
 import { BaseCdkComponent } from '../base-cdk/base-cdk.component';
 
 @Component({
@@ -14,7 +14,7 @@ import { BaseCdkComponent } from '../base-cdk/base-cdk.component';
   templateUrl: './form-cdk.component.html',
   styleUrls: ['./form-cdk.component.css'],
 })
-export class FormCdkComponent<Form> extends BaseCdkComponent {
+export class FormCdkComponent<Form> extends BaseCdkComponent implements AfterViewInit {
   override model = input<FormCdkModel<Form>>({} as FormCdkModel<Form>);
   files: { [controlId: string]: any } = {};
   currentFormValues = {};
@@ -41,7 +41,7 @@ export class FormCdkComponent<Form> extends BaseCdkComponent {
       return;
     }
 
-    this.model().inputs.forEach((input: any) => {
+    this.model().inputs.forEach((input: FormCdkInputModel<Form>) => {
       const ngFormControl = [input.defaultValue ?? ''];
 
       ngFormControl.push(this.getValidators(input));
@@ -53,7 +53,7 @@ export class FormCdkComponent<Form> extends BaseCdkComponent {
         customValidators[input.id] = (
           control: AbstractControl,
         ): ValidatorFn => {
-          return input.customValidation(control, this.form.value);
+          return (input as any).customValidation(control.value, this.form.value) ? { error: true } as any : null
         };
       }
 
@@ -75,6 +75,11 @@ export class FormCdkComponent<Form> extends BaseCdkComponent {
 
     this.form = this.fb.group(ngFormControls);
 
+    this.model().inputs.forEach((input: FormCdkInputModel<Form>) => {
+      const control = this.form.get(input.id) as AbstractControl;
+      this.EnableOrDisable(input, control);
+    });
+
     Object.keys(customValidators).forEach((key) => {
       const control = this.form.get(key) as AbstractControl;
       control.addValidators(customValidators[key]);
@@ -87,6 +92,7 @@ export class FormCdkComponent<Form> extends BaseCdkComponent {
       if (currentValuesStr !== previousValuesStr) {
         Object.keys(customValidators).forEach((key) => {
           const control = this.form.get(key) as AbstractControl;
+          this.EnableOrDisable(this.model().inputs.find((input) => input.id === key), control);
           control.updateValueAndValidity();
         });
       }
@@ -96,6 +102,22 @@ export class FormCdkComponent<Form> extends BaseCdkComponent {
   /* setDefaultValues = () => {
 
   }*/
+
+  EnableOrDisable = (input:any, control:AbstractControl) => {
+    let isEnabled = true;
+    if (typeof input.disabled === 'function') {
+      isEnabled = !input.disabled(this.form.value);
+    }
+    else {
+      isEnabled =  !input.disabled;
+    } 
+    if (isEnabled && control.disabled) {
+      control.enable();
+    }
+    if (!isEnabled && control.enabled) {
+      control.disable();
+    }
+  }
 
   setSources = () => {
     this.model().inputs?.forEach((input: any) => {

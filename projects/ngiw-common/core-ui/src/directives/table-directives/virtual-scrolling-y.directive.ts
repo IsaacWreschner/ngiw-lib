@@ -26,14 +26,14 @@ export class VirtualScrollingYDirective {
   scrollTop = 0;
   lastPosition = 0;
   timeout!: any;
-  ngiwRecordsLength = input<number>();
+  ngiwRecordsLength = input<number>(0);
   ngiwArrowsKeysObservable = input<any>();
   @Output() ngiwGetYRange = new EventEmitter();
   @Output() ngiwIsLoading = new EventEmitter();
   @Output() ngiwGetVirtualContainersHeights = new EventEmitter();
 
   constructor(private elem: ElementRef) {
-    this.elem.nativeElement.onscroll = (e: any) => {
+    this.elem.nativeElement.onscroll = () => {
       this.scrollTop = this.elem.nativeElement.scrollTop;
       this._vsManager();
       this.lastPosition = this.elem.nativeElement.scrollTop;
@@ -57,7 +57,7 @@ export class VirtualScrollingYDirective {
     }, 50);
   }
 
-  OnChanges(e: any) {
+  OnChanges() {
     this._vsManager();
   }
 

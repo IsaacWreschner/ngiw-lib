@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ConnectionPositionPair } from '@angular/cdk/overlay';
 import {
+  AfterViewInit,
   Component,
   ContentChild,
-  Input,
+  OnDestroy,
+  OnInit,
   TemplateRef,
   input,
 } from '@angular/core';
@@ -16,9 +18,9 @@ import { ActiveService } from '../../services/table-services/active.service';
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
 })
-export class TableComponent {
-  ngiwRows = input<number>();
-  ngiwCols = input<number>();
+export class TableComponent implements OnInit, OnDestroy, AfterViewInit {
+  ngiwRows = input<number>(0);
+  ngiwCols = input<number>(0);
   ngiwFirstColumnFixed = input(true);
   ngiwHeight = input<number>();
   ngiwWidth = input<number>();
@@ -128,7 +130,7 @@ export class TableComponent {
     this.detectChanges();
   }
 
-  handleKeyDown(e: any, row = 0, col = 0) {
+  handleKeyDown(e: any) {
     const keyCode = e.keyCode;
     if (keyCode > 36 && keyCode < 41) e.preventDefault();
     const d = new Date();
@@ -217,6 +219,7 @@ export class TableComponent {
   }
 
   onGetXRange(e: any) {
+    console.log(e)
     this.XRange = [];
     const len = this.ngiwCols();
     const incremente = this.ngiwFirstColumnFixed() ? 1 : 0;

@@ -12,8 +12,8 @@ export class FileUploadComponent {
   ngiwUploadPath = input<
     string | ((file: NzUploadFile) => string | Observable<string>)
   >();
-  ngiwDisplay = input<any>('text');
-  ngiwFiles = input<any>([]);
+  ngiwDisplay = input<'text'>('text');
+  ngiwFiles = input<never[]>([]);
   ngiwMaxUploads = input(0);
   ngiwMultiSelect = input(false);
   ngiwAddFileLabel = input('Add File');
@@ -24,7 +24,7 @@ export class FileUploadComponent {
   previewImage: string | undefined = '';
   previewVisible = false;
 
-  ngOnInit() {
+  OnInit() {
     setInterval(() => {
       console.log(this.ngiwFiles());
     }, 2000);

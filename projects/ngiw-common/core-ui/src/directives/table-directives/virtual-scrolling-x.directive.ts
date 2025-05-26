@@ -4,7 +4,6 @@ import {
   Directive,
   ElementRef,
   EventEmitter,
-  HostBinding,
   HostListener,
   Output,
   input,
@@ -25,12 +24,12 @@ export class VirtualScrollingXDirective {
   XRange!: number[];
   currScrollPosition!: number;
   virtualContainers!: [number, number];
-  ngiwColumnsLength = input<number>();
+  ngiwColumnsLength = input<number>(0);
   ngiwArrowsKeysObservable = input<any>();
-  ngiwFirstColumnFixed = input<any>();
+  ngiwFirstColumnFixed = input<any>(true);
   @Output() ngiwGetXRange = new EventEmitter();
   @Output() ngiwGetVirtualContainersWidths = new EventEmitter();
-  @HostListener('scroll', ['$event']) scroll = (e: any) => {
+  @HostListener('scroll', ['$event']) scroll = () => {
     console.log('scrolling');
   };
 
@@ -54,7 +53,7 @@ export class VirtualScrollingXDirective {
   }
 
   private _getHeadAndRowsHeight(): boolean {
-    const th = document.getElementById('ngiwThForVS');
+    //const th = document.getElementById('ngiwThForVS');
     this.columnWidth = 100;
     return true;
   }
@@ -134,7 +133,7 @@ export class VirtualScrollingXDirective {
   }
 
   private _onKeyLeft(indexRow: number, indexColumn: number) {
-    const width = this._tblWrapperWidth();
+    //const width = this._tblWrapperWidth();
     const tblLeft = this._tblWrapperLeft();
     let tdLeft;
     const tdIndex = indexColumn - this.XRange[0];
@@ -192,7 +191,7 @@ export class VirtualScrollingXDirective {
     return this.elem.nativeElement.offsetWidth;
   }
 
-  ngOnChanges(e: any) {
+  OnChanges() {
     this._vsManager();
   }
 }

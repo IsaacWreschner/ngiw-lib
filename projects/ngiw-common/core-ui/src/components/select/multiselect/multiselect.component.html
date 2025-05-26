@@ -1,6 +1,6 @@
 <div class="tree-select" [style.width]="ngiwWidth() ?? 200">
   <nz-cascader
-    [(ngModel)]="ngiwValue"
+    [(ngModel)]="value"
     [nzOptions]="ngiwOptions()"
     [nzPlaceHolder]="ngiwPlaceholder()"
     (ngModelChange)="onValueChanges($event)"

@@ -18,6 +18,8 @@ const CONSTS = {
   PASSPORT_LABEL: 'מספר דרכון',
   PASSPORT_ERROR: 'מספר דרכון לא תקין'
 }
+
+type DataModel = { idNumber: string, idType: number };
 @Component({
   selector: 'app-forms',
   templateUrl: './forms.component.html',
@@ -28,8 +30,8 @@ export class FormsComponent {
 
   formSubmittedValue = "{}"
 
-  formModel1: FormCdkModel<{ idNumber: string, idType: number }> = {} as any;
-  loginForm: FormCdkModel<{ idNumber: string, idType: number }> = {} as any;
+  formModel1: FormCdkModel<DataModel> = {} as any;
+  loginForm: FormCdkModel<DataModel> = {} as any;
 
   modalRef: any;
 
@@ -52,9 +54,18 @@ export class FormsComponent {
           type: 'input',
           label: CONSTS.ID_NUMBER_LABEL,
           required: true,
+          disabled: (form: DataModel) =>  !form.idType,
           defaultValue: CONSTS.ID_NUMBER,
           customValidation: this.idNumberCustomValidation,
-          errorTip: CONSTS.ID_NUMBER_ERROR
+          errorTip: (form:DataModel) => {
+            if(form.idType === 1) {
+              return CONSTS.ID_NUMBER_ERROR
+            }
+            if (form.idType === 2) {
+              return CONSTS.PASSPORT_ERROR
+            } 
+            return ''
+          } 
         },
         {
           id: 'idType',
@@ -77,14 +88,14 @@ export class FormsComponent {
 
   }
 
-  idNumberCustomValidation = (control: AbstractControl, form: any) => {
+  idNumberCustomValidation = (value: any, form: DataModel) => {
     if (form.idType === 1) {
-      return !this.israelIdValidator(control.value) ? { error: true } : null;
+      return !this.israelIdValidator(value) ? true : false;
     }
     if (form.idType === 2) {
-      return !this.passportValidator(control.value) ? { error: true } : null;
+      return !this.passportValidator(value) ? true : false;
     }
-    return null;
+    return false;
   }
 
   israelIdValidator(value: any): boolean {

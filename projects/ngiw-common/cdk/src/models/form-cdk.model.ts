@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { AbstractControl } from "@angular/forms";
 import { Observable } from "rxjs";
 import { BaseCdkModel } from "./base-cdk.model";
@@ -42,12 +43,13 @@ export type FormCdkInputModel<Form> = {
     label: string;
     required?: boolean;
     defaultValue?: any;
-    customValidation?: (control: AbstractControl, form: Form) => any;
+    customValidation?: (value: any, form: Form) => boolean;
     errorTip?: string | ((form: Form) => string);
     options?: any[];
     $options?: Observable<any[]>;
     action?: string;
     $defaultValue?: Observable<any[]>;
+    disabled?: boolean | ((form: Form) => boolean);
     };
 
 
